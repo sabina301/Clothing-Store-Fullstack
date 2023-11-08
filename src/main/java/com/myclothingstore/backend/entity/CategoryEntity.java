@@ -25,4 +25,10 @@ public class CategoryEntity {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "categoryEntity")
     private Set<ProductEntity> products = new HashSet<>();
+
+    public void removeProduct(ProductEntity product) {
+        products.remove(product);
+        product.setCategoryEntity(null);
+    }
+
 }

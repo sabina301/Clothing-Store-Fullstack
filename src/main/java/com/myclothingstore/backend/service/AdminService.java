@@ -4,6 +4,7 @@ package com.myclothingstore.backend.service;
 import com.myclothingstore.backend.entity.CategoryEntity;
 import com.myclothingstore.backend.entity.ProductEntity;
 import com.myclothingstore.backend.entity.UserEntity;
+import com.myclothingstore.backend.model.DTO.ChangeProductDTO;
 import com.myclothingstore.backend.model.DTO.ChangeUserDTO;
 import com.myclothingstore.backend.model.Role;
 //import com.myclothingstore.backend.repository.CategoryRepository;
@@ -82,5 +83,37 @@ public class AdminService {
         productRepository.save(productEntity);
     }
 
+    public ProductEntity changeProductService(Long id, ChangeProductDTO productDTO) throws Exception{
+        try {
+            ProductEntity productEntity = productRepository.findById(id).get();
+            if (productDTO.getProductIcon()!="") {productEntity.setProductIcon(productDTO.getProductIcon());}
+            if (productDTO.getProductName()!="") {productEntity.setProductName(productDTO.getProductName());}
+            if (productDTO.getProductDescription()!="") {productEntity.setProductDescription(productDTO.getProductDescription());}
+            if (productDTO.getProductPrice()>0) {productEntity.setProductPrice(productDTO.getProductPrice());}
+            if (productDTO.getProductStatus()!="") {productEntity.setProductStatus(productDTO.getProductStatus());}
+            return productRepository.save(productEntity);
+        } catch (Exception err){
+            throw new Exception("Ошибка2");
+        }
+
+    }
+
+    public void deleteProductService(Long id) throws Exception{
+        try {
+
+            ProductEntity productEntity = productRepository.findById(id).orElseThrow(() ->
+                    new Exception("Нет такого id"));
+
+            CategoryEntity category = productEntity.getCategoryEntity();
+
+            category.removeProduct(productEntity);
+            productEntity.setCategoryEntity(null);
+
+            productRepository.save(productEntity);
+
+        } catch (Exception err) {
+            throw new Exception("Ошибка при удалении продукта");
+        }
+    }
 
 }

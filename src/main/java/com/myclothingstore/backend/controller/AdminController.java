@@ -2,6 +2,7 @@ package com.myclothingstore.backend.controller;
 
 import com.myclothingstore.backend.entity.CategoryEntity;
 import com.myclothingstore.backend.entity.ProductEntity;
+import com.myclothingstore.backend.model.DTO.ChangeProductDTO;
 import com.myclothingstore.backend.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -53,7 +54,22 @@ public class AdminController {
         }
     }
 
+    @PutMapping("/{id}/changeproduct")
+    public ResponseEntity changeProductController(@PathVariable Long id, @RequestBody ChangeProductDTO productDTO){
+        try {
+            return ResponseEntity.ok(adminService.changeProductService(id, productDTO));
+        } catch (Exception err) {
+            return ResponseEntity.badRequest().body("Ошибка");
+        }
+    }
 
-
-
+    @DeleteMapping("/{id}/deleteproduct")
+    public ResponseEntity deleteProductController(@PathVariable Long id) throws Exception{
+        try{
+            adminService.deleteProductService(id);
+            return ResponseEntity.ok("Удалено");
+        } catch (Exception err) {
+            return ResponseEntity.badRequest().body("Ошибка");
+        }
+    }
 }
