@@ -3,21 +3,25 @@ package com.myclothingstore.backend.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 
 @Entity
-@Table(name = "product")
+@Table(name = "products")
 @DynamicUpdate
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class ProductEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String productId;
+    private Long productId;
 
     private String productName;
 
@@ -29,7 +33,7 @@ public class ProductEntity implements Serializable {
 
     private String productStatus;
 
-    private String categoryType;
+    private Integer categoryId;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

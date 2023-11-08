@@ -2,15 +2,20 @@ package com.myclothingstore.backend.service;
 
 
 import com.myclothingstore.backend.entity.CategoryEntity;
+import com.myclothingstore.backend.entity.ProductEntity;
 import com.myclothingstore.backend.entity.UserEntity;
 import com.myclothingstore.backend.model.DTO.ChangeUserDTO;
 import com.myclothingstore.backend.model.Role;
+//import com.myclothingstore.backend.repository.CategoryRepository;
+import com.myclothingstore.backend.repository.CategoryRepository;
+import com.myclothingstore.backend.repository.ProductRepository;
 import com.myclothingstore.backend.repository.RoleRepository;
 import com.myclothingstore.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,6 +27,12 @@ public class AdminService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     public UserEntity changeUserRoleService(Long id) throws Exception{
         try {
@@ -57,11 +68,19 @@ public class AdminService {
         }
     }
 
-    public CategoryEntity addCategory(CategoryEntity categoryEntity) throws Exception{
-        try{
-
-        } catch (Exception err) {
-
+    public CategoryEntity addCategoryService(CategoryEntity categoryEntity) throws Exception{
+        if (categoryRepository.findByName(categoryEntity.getName()).isEmpty()){
+            return categoryRepository.save(categoryEntity);
+        } else {
+            throw new Exception("Такое имя для категории уже существует");
         }
     }
+
+    public void addProductInCategoryService(ProductEntity productEntity) {
+        CategoryEntity categoryEntity = categoryRepository.findById(productEntity.getCategoryId()).orElseThrow(()->new RuntimeException("Нет категории с этим id"));
+        productEntity.setCategoryEntity(categoryEntity);
+        productRepository.save(productEntity);
+    }
+
+
 }

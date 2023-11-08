@@ -52,20 +52,24 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/auth/**").permitAll();
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN");
-                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
+                    auth.requestMatchers("/auth/**").permitAll(); //сделано
+                    auth.requestMatchers("/admin/**").hasRole("ADMIN"); //сделано
+                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER"); //сделано
 
-                    auth.requestMatchers("/changeuserrole/**").hasRole("ADMIN");
-                    auth.requestMatchers("/changeadminrole/**").hasRole("ADMIN");
+                    auth.requestMatchers("/changeuserrole/**").hasRole("ADMIN"); //сделано
+                    auth.requestMatchers("/changeadminrole/**").hasRole("ADMIN"); //сделано
 
-                    auth.requestMatchers("/addproductincategory/**").hasRole("ADMIN");
+                    auth.requestMatchers("/addcategory/**").hasRole("ADMIN"); //сделано 08.11
+                    auth.requestMatchers("/addproductincategory/**").hasRole("ADMIN"); //сделано 08.11
                     auth.requestMatchers("/changeproductname/**").hasRole("ADMIN");
                     auth.requestMatchers("/changeproductprice/**").hasRole("ADMIN");
 
 
                     auth.requestMatchers("/addproductincart/**").hasRole("USER");
                     auth.requestMatchers("/deleteproductincart/**").hasRole("USER");
+
+                    auth.requestMatchers("/showallcategories/**").permitAll(); //сделано 08.11
+                    auth.requestMatchers("/showproductsincategory/**").permitAll(); //сделано 08.11
 
                     auth.anyRequest().authenticated();
                 });

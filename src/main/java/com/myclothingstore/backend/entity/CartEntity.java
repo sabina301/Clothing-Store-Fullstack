@@ -13,6 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "cart")
 public class CartEntity implements Serializable {
 
     @Id
@@ -24,7 +25,7 @@ public class CartEntity implements Serializable {
     @JsonIgnore
     private UserEntity userEntity;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "categoryEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "cartEntity")
     private Set<ProductEntity> products = new HashSet<>();
 
 
