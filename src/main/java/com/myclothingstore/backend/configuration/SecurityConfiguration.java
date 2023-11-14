@@ -66,7 +66,9 @@ public class SecurityConfiguration {
 
 
                     auth.requestMatchers("/addproductincart/**").hasRole("USER");
+                    auth.requestMatchers("/showproductincart/**").hasRole("USER");
                     auth.requestMatchers("/deleteproductincart/**").hasRole("USER");
+
 
                     auth.requestMatchers("/showallcategories/**").permitAll(); //сделано 08.11
                     auth.requestMatchers("/showproductsincategory/**").permitAll(); //сделано 08.11

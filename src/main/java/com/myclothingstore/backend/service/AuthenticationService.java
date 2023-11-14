@@ -1,8 +1,10 @@
 package com.myclothingstore.backend.service;
 
+import com.myclothingstore.backend.entity.CartEntity;
 import com.myclothingstore.backend.model.DTO.LoginResponseDTO;
 import com.myclothingstore.backend.entity.UserEntity;
 import com.myclothingstore.backend.model.Role;
+import com.myclothingstore.backend.repository.CartRepository;
 import com.myclothingstore.backend.repository.RoleRepository;
 import com.myclothingstore.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -24,6 +26,9 @@ public class AuthenticationService {
     private UserRepository userRepository;
 
     @Autowired
+    private CartRepository cartRepository;
+
+    @Autowired
     private RoleRepository roleRepository;
 
     @Autowired
@@ -34,18 +39,29 @@ public class AuthenticationService {
 
     @Autowired
     private TokenService tokenService;
-    public UserEntity registerUser(String username, String password) throws Exception{
+    public void registerUser(String username, String password) throws Exception{
         if (userRepository.findByUsername(username).isEmpty()){
             String encodedPassword = passwordEncoder.encode(password);
-            Role userRole = roleRepository.findByAuthority("USER").get();
+            Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new Exception("Роль не найдена"));
             Set<Role> authorities = new HashSet<Role>();
             authorities.add(userRole);
-            return userRepository.save(new UserEntity(0L, username, encodedPassword,authorities));
+
+            CartEntity cartEntity = new CartEntity();
+            UserEntity userEntity = new UserEntity(username, encodedPassword, authorities);
+
+            userRepository.save(userEntity);
+            cartRepository.save(cartEntity);
+
+            userEntity.setCartEntity(cartEntity);
+            cartEntity.setUserEntity(userEntity);
+
+            userRepository.save(userEntity);
+            cartRepository.save(cartEntity);
         } else {
             throw new Exception("Такое имя уже существует");
         }
-
     }
+
 
     public LoginResponseDTO loginUser(String username, String password){
 
@@ -53,11 +69,12 @@ public class AuthenticationService {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
-
             String token = tokenService.generateJwt(auth);
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
 
         } catch(AuthenticationException e){
+            return new LoginResponseDTO(null, "");
+        } catch (Exception err){
             return new LoginResponseDTO(null, "");
         }
     }

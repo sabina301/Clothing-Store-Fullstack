@@ -5,6 +5,7 @@ import com.myclothingstore.backend.model.DTO.RegistrationDTO;
 import com.myclothingstore.backend.entity.UserEntity;
 import com.myclothingstore.backend.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,8 +16,9 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    private UserEntity userRegister(@RequestBody RegistrationDTO registrationDTO) throws Exception {
-        return authenticationService.registerUser(registrationDTO.getUsername(), registrationDTO.getPassword());
+    private ResponseEntity userRegister(@RequestBody RegistrationDTO registrationDTO) throws Exception {
+        authenticationService.registerUser(registrationDTO.getUsername(), registrationDTO.getPassword());
+        return ResponseEntity.ok("Сохранен");
     }
 
     @PostMapping("/login")

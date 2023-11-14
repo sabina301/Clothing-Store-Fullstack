@@ -1,5 +1,6 @@
 package com.myclothingstore.backend;
 
+import com.myclothingstore.backend.entity.CartEntity;
 import com.myclothingstore.backend.entity.UserEntity;
 import com.myclothingstore.backend.model.Role;
 import com.myclothingstore.backend.repository.RoleRepository;
@@ -28,7 +29,7 @@ public class BackendApplication {
 			roleRepository.save(new Role("USER"));
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
-			UserEntity admin = new UserEntity(1L, "admin", passwordEncode.encode("password"), roles);
+			UserEntity admin = new UserEntity(1L, "admin", passwordEncode.encode("password"), roles, new CartEntity());
 			userRepository.save(admin);
 		};
 	}

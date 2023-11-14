@@ -1,5 +1,6 @@
 package com.myclothingstore.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.myclothingstore.backend.model.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,9 +22,9 @@ import java.util.Set;
 public class UserEntity implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="user_id")
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id")
+    private Long id;
 
     private String username;
     private String password;
@@ -35,6 +36,16 @@ public class UserEntity implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name="role_id")}
     )
     private Set<Role> authorities;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "userEntity", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private CartEntity cartEntity;
+
+    public UserEntity(String username, String password, Set<Role> authorities){
+        this.username = username;
+        this.password = password;
+        this.authorities = authorities;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

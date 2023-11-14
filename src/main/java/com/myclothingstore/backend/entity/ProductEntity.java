@@ -37,6 +37,7 @@ public class ProductEntity implements Serializable {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
+
     private CartEntity cartEntity;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
