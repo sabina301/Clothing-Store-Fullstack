@@ -14,6 +14,23 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
+    @PostMapping("/addproductincart/{id}")
+    public ResponseEntity addProductInCartController(@PathVariable("id") Long id, Principal principal){
+        try {
+            cartService.addProductInCartService(id, principal);
+            return ResponseEntity.ok("Продукт добавлен");
+        } catch (Exception err){
+            return ResponseEntity.badRequest().body("Ошибка");
+        }
+    }
 
+    @GetMapping("/showcart")
+    public ResponseEntity showCartController(Principal principal){
+        try{
+            return ResponseEntity.ok(cartService.showCartService(principal));
+        } catch (Exception err){
+            return ResponseEntity.badRequest().body("Ошибка");
+        }
+    }
 
 }
