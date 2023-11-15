@@ -9,12 +9,13 @@ import java.security.Principal;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("/cart")
 public class CartController {
 
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/addproductincart/{id}")
+    @PostMapping("/addproduct/{id}")
     public ResponseEntity addProductInCartController(@PathVariable("id") Long id, Principal principal){
         try {
             cartService.addProductInCartService(id, principal);
@@ -24,7 +25,7 @@ public class CartController {
         }
     }
 
-    @GetMapping("/showcart")
+    @GetMapping("/show")
     public ResponseEntity showCartController(Principal principal){
         try{
             return ResponseEntity.ok(cartService.showCartService(principal));
@@ -33,7 +34,7 @@ public class CartController {
         }
     }
 
-    @DeleteMapping("/deleteproductincart/{id}")
+    @DeleteMapping("/deleteproduct/{id}")
     public ResponseEntity deleteProductController(Principal principal, @PathVariable Long id){
         try{
             cartService.deleteProductService(principal, id);

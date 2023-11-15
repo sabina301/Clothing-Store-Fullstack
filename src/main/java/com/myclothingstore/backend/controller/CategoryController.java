@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-
+@RequestMapping("/category")
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-    @PostMapping("/admin/addcategory")
+    @PostMapping("/add")
     public ResponseEntity addCategoryController(@RequestBody CategoryEntity categoryEntity){
         try{
             return ResponseEntity.ok(categoryService.addCategoryService(categoryEntity));
@@ -22,7 +22,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/showallcategories")
+    @GetMapping("/showall")
     public ResponseEntity showAllCategoriesController() throws Exception{
         try{
             return ResponseEntity.ok(categoryService.showAllCategoriesService());
@@ -31,7 +31,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/showproductsincategory/{id}")
+    @GetMapping("/showproducts/{id}")
     public ResponseEntity showProductsInCategoryController(@PathVariable("id") Integer categoryId){
         try{
             return ResponseEntity.ok(categoryService.showProductsInCategoryService(categoryId));

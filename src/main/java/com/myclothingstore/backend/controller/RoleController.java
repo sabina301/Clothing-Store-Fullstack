@@ -6,14 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/role")
 @CrossOrigin("*")
 public class RoleController {
 
     @Autowired
     private RoleService roleService;
 
-    @PostMapping("/changeuserrole/{id}")
+    @PostMapping("/changeuser/{id}")
     public ResponseEntity changeUserRoleController(@PathVariable("id") Long id){
         try{
             return ResponseEntity.ok(roleService.changeUserRoleService(id));
@@ -22,7 +22,7 @@ public class RoleController {
         }
     }
 
-    @PostMapping("/changeadminrole/{id}")
+    @PostMapping("/changeadmin/{id}")
     public ResponseEntity changeAdminRoleController(@PathVariable("id") Long id){
         try{
             return ResponseEntity.ok(roleService.changeAdminRoleService(id));

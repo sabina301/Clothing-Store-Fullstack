@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
+@RequestMapping("/product")
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @PostMapping("/admin/addproductincategory")
+    @PostMapping("/addincategory")
     public ResponseEntity addProductInCategoryController(@RequestBody ProductEntity productEntity){
         try{
             productService.addProductInCategoryService(productEntity);
@@ -23,7 +24,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/admin/{id}/changeproduct")
+    @PutMapping("/{id}/change")
     public ResponseEntity changeProductController(@PathVariable Long id, @RequestBody ChangeProductDTO productDTO){
         try {
             return ResponseEntity.ok(productService.changeProductService(id, productDTO));
@@ -32,7 +33,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/admin/{id}/deleteproduct")
+    @DeleteMapping("/{id}/delete")
     public ResponseEntity deleteProductController(@PathVariable Long id) throws Exception{
         try{
             productService.deleteProductService(id);

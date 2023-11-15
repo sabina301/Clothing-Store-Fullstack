@@ -52,26 +52,22 @@ public class SecurityConfiguration {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
+
                     auth.requestMatchers("/auth/**").permitAll(); //сделано
-                    auth.requestMatchers("/admin/**").hasRole("ADMIN"); //сделано
-                    auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER"); //сделано
 
-                    auth.requestMatchers("/changeuserrole/**").hasRole("ADMIN"); //сделано
-                    auth.requestMatchers("/changeadminrole/**").hasRole("ADMIN"); //сделано
+                    auth.requestMatchers("/cart/addproduct/**").hasRole("USER"); //сделано 14.11
+                    auth.requestMatchers("/cart/show/**").hasRole("USER"); //сделано 14.11
+                    auth.requestMatchers("/cart/deleteproduct/**").hasRole("USER"); // сделано 15.11
 
-                    auth.requestMatchers("/addcategory/**").hasRole("ADMIN"); //сделано 08.11
-                    auth.requestMatchers("/addproductincategory/**").hasRole("ADMIN"); //сделано 08.11
-                    auth.requestMatchers("/changeproduct/**").hasRole("ADMIN"); //сделано 08.11
-                    auth.requestMatchers("/deleteproduct/**").hasRole("ADMIN"); //сделано 08.11
+                    auth.requestMatchers("/category/add/**").hasRole("ADMIN"); //сделано 08.11
+                    auth.requestMatchers("/category/showall/**").permitAll(); //сделано 08.11
+                    auth.requestMatchers("/category/showproducts/**").permitAll(); //сделано 08.11
 
+                    auth.requestMatchers("/product/addincategory/**").hasRole("ADMIN"); //сделано 08.11
+                    auth.requestMatchers("/product/{id}/change/**").hasRole("ADMIN"); //сделано 08.11
+                    auth.requestMatchers("/product/{id}/delete/**").hasRole("ADMIN"); //сделано 08.11
 
-                    auth.requestMatchers("/addproductincart/**").hasRole("USER"); //сделано 14.11
-                    auth.requestMatchers("/showproductincart/**").hasRole("USER"); //сделано 14.11
-                    auth.requestMatchers("/deleteproductincart/**").hasRole("USER"); //
-
-
-                    auth.requestMatchers("/showallcategories/**").permitAll(); //сделано 08.11
-                    auth.requestMatchers("/showproductsincategory/**").permitAll(); //сделано 08.11
+                    auth.requestMatchers("/role/**").hasRole("ADMIN"); //сделано
 
                     auth.anyRequest().authenticated();
                 });
