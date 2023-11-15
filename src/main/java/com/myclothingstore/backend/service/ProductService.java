@@ -27,6 +27,7 @@ public class ProductService {
 
     public void addProductInCategoryService(ProductEntity productEntity) {
         CategoryEntity categoryEntity = categoryRepository.findById(productEntity.getCategoryId()).orElseThrow(()->new RuntimeException("Нет категории с этим id"));
+        categoryEntity.addProduct(productEntity);
         productEntity.setCategoryEntity(categoryEntity);
         productRepository.save(productEntity);
     }

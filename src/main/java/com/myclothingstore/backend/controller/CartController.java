@@ -33,4 +33,14 @@ public class CartController {
         }
     }
 
+    @DeleteMapping("/deleteproductincart/{id}")
+    public ResponseEntity deleteProductController(Principal principal, @PathVariable Long id){
+        try{
+            cartService.deleteProductService(principal, id);
+            return ResponseEntity.ok("Удалено");
+        } catch (Exception err){
+            return ResponseEntity.badRequest().body("Ошибка");
+        }
+    }
+
 }

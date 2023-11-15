@@ -16,19 +16,18 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name="categories")
 public class CategoryEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer categoryId;
-
     private String  name;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "categoryEntity")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "categoryEntity", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     private Set<ProductEntity> products = new HashSet<>();
-
+    public void addProduct(ProductEntity product) {
+        products.add(product);
+        product.setCategoryEntity(this);
+    }
     public void removeProduct(ProductEntity product) {
         products.remove(product);
         product.setCategoryEntity(null);
     }
-
 }

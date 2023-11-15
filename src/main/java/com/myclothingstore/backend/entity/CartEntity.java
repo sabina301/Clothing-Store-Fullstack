@@ -15,25 +15,23 @@ import java.util.Set;
 @Getter
 @Setter
 public class CartEntity implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
-
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "cartEntity")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cartEntity", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     private Set<ProductEntity> products = new HashSet<>();
-
-
     public CartEntity(UserEntity user) {
         this.userEntity = user;
     }
     public void addProduct(ProductEntity productEntity){
         products.add(productEntity);
+        productEntity.setCartEntity(this);
+    }
+    public void deleteProduct(ProductEntity productEntity){
+        products.remove(productEntity);
+        productEntity.setCartEntity(null);
     }
 }

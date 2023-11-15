@@ -18,30 +18,21 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class ProductEntity implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String productName;
-
     private String productDescription;
-
     private String productIcon;
-
     private Integer productPrice;
-
     private String productStatus;
-
     private Integer categoryId;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
-
     private CartEntity cartEntity;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private CategoryEntity categoryEntity;
-
 }

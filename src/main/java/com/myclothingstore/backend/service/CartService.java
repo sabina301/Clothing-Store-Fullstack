@@ -50,7 +50,20 @@ public class CartService {
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).get();
         CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElse(new CartEntity(userEntity));
         Set<ProductEntity> products = cartEntity.getProducts();
-        System.out.println(products);
         return products;
+    }
+
+    @Transactional
+    public void deleteProductService(Principal principal, Long id){
+        UserEntity userEntity = userRepository.findByUsername(principal.getName()).get();
+        CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElse(new CartEntity(userEntity));
+        ProductEntity productEntity = productRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Вещь не найдена"));
+
+        if (cartEntity.getProducts().contains(productEntity)){
+            cartEntity.deleteProduct(productEntity);
+            cartRepository.save(cartEntity);
+        } else {
+            throw new EntityNotFoundException("Продукт не найден в корзине");
+        }
     }
 }
