@@ -53,20 +53,29 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
 
+                    //AUTH
                     auth.requestMatchers("/auth/**").permitAll(); //сделано
 
+                    //CART
                     auth.requestMatchers("/cart/addproduct/**").hasRole("USER"); //сделано 14.11
                     auth.requestMatchers("/cart/show/**").hasRole("USER"); //сделано 14.11
                     auth.requestMatchers("/cart/deleteproduct/**").hasRole("USER"); // сделано 15.11
 
+                    //CATEGORY
                     auth.requestMatchers("/category/add/**").hasRole("ADMIN"); //сделано 08.11
                     auth.requestMatchers("/category/showall/**").permitAll(); //сделано 08.11
                     auth.requestMatchers("/category/showproducts/**").permitAll(); //сделано 08.11
 
+                    //ORDER
+                    auth.requestMatchers("/order/user/**").hasRole("USER"); //сделано 16.11
+                    auth.requestMatchers("/order/admin/**").hasRole("ADMIN"); //сделано 16.11
+
+                    //PRODUCT
                     auth.requestMatchers("/product/addincategory/**").hasRole("ADMIN"); //сделано 08.11
                     auth.requestMatchers("/product/{id}/change/**").hasRole("ADMIN"); //сделано 08.11
                     auth.requestMatchers("/product/{id}/delete/**").hasRole("ADMIN"); //сделано 08.11
 
+                    //ROLE
                     auth.requestMatchers("/role/**").hasRole("ADMIN"); //сделано
 
                     auth.anyRequest().authenticated();

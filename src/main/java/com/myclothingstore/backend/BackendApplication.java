@@ -29,7 +29,8 @@ public class BackendApplication {
 			roleRepository.save(new Role("USER"));
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
-			UserEntity admin = new UserEntity(1L, "admin", passwordEncode.encode("password"), roles, new CartEntity());
+			UserEntity admin =
+					new UserEntity(1L, "admin", passwordEncode.encode("password"), roles, new CartEntity(), new HashSet<>());
 			userRepository.save(admin);
 		};
 	}

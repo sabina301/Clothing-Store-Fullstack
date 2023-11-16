@@ -41,6 +41,10 @@ public class UserEntity implements UserDetails {
     @JsonIgnore
     private CartEntity cartEntity;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userEntity", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<OrderEntity> orders;
+
     public UserEntity(String username, String password, Set<Role> authorities){
         this.username = username;
         this.password = password;

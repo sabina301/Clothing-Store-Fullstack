@@ -9,13 +9,9 @@ import lombok.Setter;
 public class ChangeProductDTO {
 
     private String productName;
-
     private String productDescription;
-
     private String productIcon;
-
     private Integer productPrice;
-
     private String productStatus;
 
 }
