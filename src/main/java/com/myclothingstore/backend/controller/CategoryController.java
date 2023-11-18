@@ -1,7 +1,7 @@
 package com.myclothingstore.backend.controller;
 
 import com.myclothingstore.backend.entity.CategoryEntity;
-import com.myclothingstore.backend.service.CategoryService;
+import com.myclothingstore.backend.service.impl.CategoryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
-    private CategoryService categoryService;
+    private CategoryServiceImpl categoryService;
 
     @PostMapping("/add")
     public ResponseEntity addCategoryController(@RequestBody CategoryEntity categoryEntity){

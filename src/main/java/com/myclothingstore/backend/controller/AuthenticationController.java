@@ -2,8 +2,7 @@ package com.myclothingstore.backend.controller;
 
 import com.myclothingstore.backend.model.DTO.LoginResponseDTO;
 import com.myclothingstore.backend.model.DTO.RegistrationDTO;
-import com.myclothingstore.backend.entity.UserEntity;
-import com.myclothingstore.backend.service.AuthenticationService;
+import com.myclothingstore.backend.service.impl.AuthenticationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class AuthenticationController {
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/register")
     private ResponseEntity userRegister(@RequestBody RegistrationDTO registrationDTO) throws Exception {

@@ -3,7 +3,7 @@ package com.myclothingstore.backend.controller;
 
 import com.myclothingstore.backend.entity.ProductEntity;
 import com.myclothingstore.backend.model.DTO.ChangeProductDTO;
-import com.myclothingstore.backend.service.ProductService;
+import com.myclothingstore.backend.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productService;
     @PostMapping("/addincategory")
     public ResponseEntity addProductInCategoryController(@RequestBody ProductEntity productEntity){
         try{

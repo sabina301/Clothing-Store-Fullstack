@@ -1,9 +1,7 @@
 package com.myclothingstore.backend.controller;
 
-import com.myclothingstore.backend.entity.UserEntity;
 import com.myclothingstore.backend.model.DTO.OrderDTO;
-import com.myclothingstore.backend.service.OrderService;
-import jakarta.transaction.Transactional;
+import com.myclothingstore.backend.service.impl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,7 @@ import java.security.Principal;
 public class OrderController {
 
     @Autowired
-    private OrderService orderService;
+    private OrderServiceImpl orderService;
 
     @PostMapping("/create")
     public ResponseEntity createOrderController(Principal principal, @RequestBody OrderDTO orderDTO){

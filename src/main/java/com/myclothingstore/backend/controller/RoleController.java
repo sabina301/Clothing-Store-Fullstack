@@ -1,6 +1,6 @@
 package com.myclothingstore.backend.controller;
 
-import com.myclothingstore.backend.service.RoleService;
+import com.myclothingstore.backend.service.impl.RoleServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class RoleController {
 
     @Autowired
-    private RoleService roleService;
+    private RoleServiceImpl roleService;
 
     @PostMapping("/changeuser/{id}")
     public ResponseEntity changeUserRoleController(@PathVariable("id") Long id){
