@@ -1,9 +1,6 @@
 package com.myclothingstore.backend.service.impl;
 
-import com.myclothingstore.backend.entity.CartEntity;
-import com.myclothingstore.backend.entity.ProductEntity;
-import com.myclothingstore.backend.entity.ProductInOrderEntity;
-import com.myclothingstore.backend.entity.UserEntity;
+import com.myclothingstore.backend.entity.*;
 import com.myclothingstore.backend.repository.CartRepository;
 import com.myclothingstore.backend.repository.ProductInOrderRepository;
 import com.myclothingstore.backend.repository.ProductRepository;
@@ -37,11 +34,25 @@ public class CartServiceImpl implements CartService {
     public void addProductInCartService(Long productId, Long size, Principal principal) {
         String username = principal.getName();
         ProductEntity productEntity = productRepository.findById(productId).orElseThrow(() -> new EntityNotFoundException("Продукт не найден"));
+
         UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
 
         CartEntity cartEntity = cartRepository.findById(userEntity.getCartEntity().getId()).get();
 
+        Set<ProductInOrderEntity> products = cartEntity.getProducts();
+
+        if (products.size()!=0) {
+            for (ProductInOrderEntity product : products) {
+                if (product.getProductEntity() == productEntity && size.equals(product.getSize())) {
+                    product.setQuantity(product.getQuantity() + 1);
+                    cartRepository.save(cartEntity);
+                    productRepository.save(productEntity);
+                    return;
+                }
+            }
+        }
         ProductInOrderEntity productInOrderEntity = new ProductInOrderEntity();
+        productInOrderEntity.setQuantity(1);
         productInOrderEntity.setProductName(productEntity.getProductName());
         productInOrderEntity.setProductIcon(productEntity.getProductIcon());
         productInOrderEntity.setProductPrice(productEntity.getProductPrice());

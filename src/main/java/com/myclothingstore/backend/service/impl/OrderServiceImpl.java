@@ -31,12 +31,11 @@ public class OrderServiceImpl implements OrderService {
         for (ProductInOrderEntity productInOrder : products){
             ProductEntity product = productInOrder.getProductEntity();
             Set<ProductSizeEntity> productSizeEntities= product.getSizes();
-
             for (ProductSizeEntity productSizeEntity: productSizeEntities){
                 if (productSizeEntity.getSize() == productInOrder.getSize()){
-                    if (productSizeEntity.getQuantity()>=1){
-                        productSizeEntity.setQuantity(productSizeEntity.getQuantity() - 1);
-                        System.out.println("!!! Товар есть на складе. Осталось: " + productSizeEntity.getQuantity());
+                    if (productSizeEntity.getQuantity()>=productInOrder.getQuantity()){
+                        productSizeEntity.setQuantity(productSizeEntity.getQuantity() - productInOrder.getQuantity());
+                        System.out.println("Товар есть на складе. Осталось: " + productSizeEntity.getQuantity());
                     }
                     else{
                         return "Товар " + productInOrder.getProductName() + " закончился на складе :(";

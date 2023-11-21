@@ -24,6 +24,7 @@ public class ProductInOrderEntity implements Serializable {
     private String productIcon;
     private Integer productPrice;
     private Long size;
+    private Integer quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

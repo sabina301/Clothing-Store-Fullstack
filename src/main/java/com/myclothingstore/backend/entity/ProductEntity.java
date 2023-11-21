@@ -42,7 +42,7 @@ public class ProductEntity implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productEntity", cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<ProductSizeEntity> productsInOrder = new HashSet<>();
+    private Set<ProductInOrderEntity> productsInOrder = new HashSet<>();
 
     public void addSize(ProductSizeEntity productSizeEntity){
         sizes.add(productSizeEntity);
