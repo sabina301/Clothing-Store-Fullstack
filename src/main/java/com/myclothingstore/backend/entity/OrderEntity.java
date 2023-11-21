@@ -32,8 +32,8 @@ public class OrderEntity {
     @JoinTable(name = "order_product",
         joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
         inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
-    private Set<ProductEntity> products = new HashSet<>();
-    public OrderEntity(Short code, String address, String status, UserEntity userEntity, Set<ProductEntity> products){
+    private Set<ProductInOrderEntity> products = new HashSet<>();
+    public OrderEntity(Short code, String address, String status, UserEntity userEntity, Set<ProductInOrderEntity> products){
         this.code=code;
         this.address=address;
         this.status=status;

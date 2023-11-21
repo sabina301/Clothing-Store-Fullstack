@@ -5,6 +5,7 @@ import com.myclothingstore.backend.entity.ProductEntity;
 import com.myclothingstore.backend.model.DTO.ChangeProductDTO;
 import com.myclothingstore.backend.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
+
+
     @PostMapping("/addincategory")
     public ResponseEntity addProductInCategoryController(@RequestBody ProductEntity productEntity){
         try{

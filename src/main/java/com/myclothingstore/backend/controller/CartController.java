@@ -15,10 +15,10 @@ public class CartController {
     @Autowired
     private CartServiceImpl cartService;
 
-    @PostMapping("/addproduct/{id}")
-    public ResponseEntity addProductInCartController(@PathVariable("id") Long id, Principal principal){
+    @PostMapping("/addproduct/{id}/{size}")
+    public ResponseEntity addProductInCartController(@PathVariable("id") Long id, @PathVariable("size") Long size,Principal principal){
         try {
-            cartService.addProductInCartService(id, principal);
+            cartService.addProductInCartService(id, size, principal);
             return ResponseEntity.ok("Продукт добавлен");
         } catch (Exception err){
             return ResponseEntity.badRequest().body("Ошибка");

@@ -22,15 +22,15 @@ public class CartEntity implements Serializable {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cartEntity", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
-    private Set<ProductEntity> products = new HashSet<>();
+    private Set<ProductInOrderEntity> products = new HashSet<>();
     public CartEntity(UserEntity user) {
         this.userEntity = user;
     }
-    public void addProduct(ProductEntity productEntity){
-        products.add(productEntity);
-        productEntity.setCartEntity(this);
+    public void addProduct(ProductInOrderEntity ProductInOrderEntity){
+        products.add(ProductInOrderEntity);
+        ProductInOrderEntity.setCartEntity(this);
     }
-    public void deleteProduct(ProductEntity productEntity){
+    public void deleteProduct(ProductInOrderEntity productEntity){
         products.remove(productEntity);
         productEntity.setCartEntity(null);
     }

@@ -2,6 +2,7 @@ package com.myclothingstore.backend.service.impl;
 
 import com.myclothingstore.backend.entity.CategoryEntity;
 import com.myclothingstore.backend.entity.ProductEntity;
+import com.myclothingstore.backend.entity.ProductSizeEntity;
 import com.myclothingstore.backend.model.DTO.ChangeProductDTO;
 import com.myclothingstore.backend.repository.CategoryRepository;
 import com.myclothingstore.backend.repository.ProductRepository;
@@ -10,6 +11,8 @@ import com.myclothingstore.backend.repository.UserRepository;
 import com.myclothingstore.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -65,4 +68,6 @@ public class ProductServiceImpl implements ProductService {
             throw new Exception("Ошибка при удалении продукта");
         }
     }
+
+
 }

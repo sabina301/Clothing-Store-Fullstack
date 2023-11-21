@@ -1,13 +1,8 @@
 package com.myclothingstore.backend.service.impl;
 
-import com.myclothingstore.backend.entity.CartEntity;
-import com.myclothingstore.backend.entity.OrderEntity;
-import com.myclothingstore.backend.entity.ProductEntity;
-import com.myclothingstore.backend.entity.UserEntity;
+import com.myclothingstore.backend.entity.*;
 import com.myclothingstore.backend.model.DTO.OrderDTO;
-import com.myclothingstore.backend.repository.CartRepository;
-import com.myclothingstore.backend.repository.OrderRepository;
-import com.myclothingstore.backend.repository.UserRepository;
+import com.myclothingstore.backend.repository.*;
 import com.myclothingstore.backend.service.OrderService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +21,30 @@ public class OrderServiceImpl implements OrderService {
     private UserRepository userRepository;
     @Autowired
     private CartRepository cartRepository;
+
+
     @Transactional
     public String createOrderService(Principal principal, OrderDTO orderDTO){
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Пользователь не найден"));
         CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElseThrow(()->new RuntimeException("Корзина не найдена"));
-        Set<ProductEntity> products = new HashSet<>(cartEntity.getProducts());
+        Set<ProductInOrderEntity> products = new HashSet<>(cartEntity.getProducts());
+        for (ProductInOrderEntity productInOrder : products){
+            ProductEntity product = productInOrder.getProductEntity();
+            Set<ProductSizeEntity> productSizeEntities= product.getSizes();
+
+            for (ProductSizeEntity productSizeEntity: productSizeEntities){
+                if (productSizeEntity.getSize() == productInOrder.getSize()){
+                    if (productSizeEntity.getQuantity()>=1){
+                        productSizeEntity.setQuantity(productSizeEntity.getQuantity() - 1);
+                        System.out.println("!!! Товар есть на складе. Осталось: " + productSizeEntity.getQuantity());
+                    }
+                    else{
+                        return "Товар " + productInOrder.getProductName() + " закончился на складе :(";
+                    }
+                    break;
+                }
+            }
+        }
         OrderEntity orderEntity = orderRepository.save(new OrderEntity((short) (100 + Math.random()*1000), orderDTO.getAddress(), "Заказ принят", userEntity, products));
         return "Заказ создан";
     }
@@ -41,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Transactional
-    public Set<ProductEntity> showOneUserOrderService(Principal principal, Long id){
+    public Set<ProductInOrderEntity> showOneUserOrderService(Principal principal, Long id){
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("ПОльзователь не найден"));
         Set<OrderEntity> orders = userEntity.getOrders();
         for (OrderEntity order: orders){
@@ -56,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
 
-    public Set<ProductEntity> showOneOrderService(Long id){
+    public Set<ProductInOrderEntity> showOneOrderService(Long id){
         OrderEntity orderEntity = orderRepository.findById(id).orElseThrow(()->new RuntimeException("Заказ не найден"));
         return orderEntity.getProducts();
     }

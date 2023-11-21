@@ -31,19 +31,22 @@ public class ProductEntity implements Serializable {
     private String productStatus;
     private Integer categoryId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
-    private CartEntity cartEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private CategoryEntity categoryEntity;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productEntity", cascade = CascadeType.ALL)
     @JsonIgnore
-    @JoinTable(name="order_product",
-        joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
-        inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
-    private Set<OrderEntity> orders = new HashSet<>();
+    private Set<ProductSizeEntity> sizes = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productEntity", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<ProductSizeEntity> productsInOrder = new HashSet<>();
+
+    public void addSize(ProductSizeEntity productSizeEntity){
+        sizes.add(productSizeEntity);
+        productSizeEntity.setProductEntity(this);
+    }
 
 }

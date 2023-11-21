@@ -13,5 +13,6 @@ public class ChangeProductDTO {
     private String productIcon;
     private Integer productPrice;
     private String productStatus;
+    private String productQuantity;
 
 }

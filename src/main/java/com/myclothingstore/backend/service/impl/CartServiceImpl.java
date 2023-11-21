@@ -2,8 +2,10 @@ package com.myclothingstore.backend.service.impl;
 
 import com.myclothingstore.backend.entity.CartEntity;
 import com.myclothingstore.backend.entity.ProductEntity;
+import com.myclothingstore.backend.entity.ProductInOrderEntity;
 import com.myclothingstore.backend.entity.UserEntity;
 import com.myclothingstore.backend.repository.CartRepository;
+import com.myclothingstore.backend.repository.ProductInOrderRepository;
 import com.myclothingstore.backend.repository.ProductRepository;
 import com.myclothingstore.backend.repository.UserRepository;
 import com.myclothingstore.backend.service.CartService;
@@ -27,27 +29,38 @@ public class CartServiceImpl implements CartService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ProductInOrderRepository productInOrderRepository;
+
 
     @Transactional
-    public void addProductInCartService(Long productId, Principal principal) {
+    public void addProductInCartService(Long productId, Long size, Principal principal) {
         String username = principal.getName();
         ProductEntity productEntity = productRepository.findById(productId).orElseThrow(() -> new EntityNotFoundException("Продукт не найден"));
         UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("Пользователь не найден"));
 
         CartEntity cartEntity = cartRepository.findById(userEntity.getCartEntity().getId()).get();
 
-        cartEntity.addProduct(productEntity);
-        productEntity.setCartEntity(cartEntity);
+        ProductInOrderEntity productInOrderEntity = new ProductInOrderEntity();
+        productInOrderEntity.setProductName(productEntity.getProductName());
+        productInOrderEntity.setProductIcon(productEntity.getProductIcon());
+        productInOrderEntity.setProductPrice(productEntity.getProductPrice());
+        productInOrderEntity.setProductEntity(productEntity);
+        productInOrderEntity.setSize(size);
+        productInOrderRepository.save(productInOrderEntity);
+
+        cartEntity.addProduct(productInOrderEntity);
+        productInOrderEntity.setCartEntity(cartEntity);
 
         cartRepository.save(cartEntity);
         productRepository.save(productEntity);
     }
 
     @Transactional
-    public Set<ProductEntity> showCartService(Principal principal){
+    public Set<ProductInOrderEntity> showCartService(Principal principal){
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).get();
         CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElse(new CartEntity(userEntity));
-        Set<ProductEntity> products = cartEntity.getProducts();
+        Set<ProductInOrderEntity> products = cartEntity.getProducts();
         return products;
     }
 
@@ -55,7 +68,7 @@ public class CartServiceImpl implements CartService {
     public void deleteProductService(Principal principal, Long id){
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).get();
         CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElse(new CartEntity(userEntity));
-        ProductEntity productEntity = productRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Вещь не найдена"));
+        ProductInOrderEntity productEntity = productInOrderRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Вещь не найдена"));
 
         if (cartEntity.getProducts().contains(productEntity)){
             cartEntity.deleteProduct(productEntity);
