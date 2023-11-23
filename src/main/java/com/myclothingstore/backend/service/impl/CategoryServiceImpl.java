@@ -31,11 +31,11 @@ public class CategoryServiceImpl implements CategoryService {
         try{
             return categoryRepository.findAll();
         } catch (Exception err){
-            throw new Exception("Ошибкаа");
+            throw new Exception("Ошибка");
         }
     }
 
     public List<ProductEntity> showProductsInCategoryService(Integer categoryId){
-        return productRepository.findByCategoryId(categoryId);
+        return productRepository.findByCategoryEntity(categoryRepository.findById(categoryId).orElseThrow(()->new RuntimeException("Не существует категории в таким id")));
     }
 }

@@ -31,7 +31,12 @@ public class CartEntity implements Serializable {
         ProductInOrderEntity.setCartEntity(this);
     }
     public void deleteProduct(ProductInOrderEntity productEntity){
-        products.remove(productEntity);
-        productEntity.setCartEntity(null);
+
+        if (productEntity.getQuantity()<=1){
+            products.remove(productEntity);
+            productEntity.setCartEntity(null);
+        } else {
+            productEntity.setQuantity(productEntity.getQuantity() - 1);
+        }
     }
 }

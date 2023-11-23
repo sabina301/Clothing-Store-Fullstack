@@ -29,8 +29,8 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
-    public void addProductInCategoryService(ProductEntity productEntity) {
-        CategoryEntity categoryEntity = categoryRepository.findById(productEntity.getCategoryId()).orElseThrow(()->new RuntimeException("Нет категории с этим id"));
+    public void addProductInCategoryService(ProductEntity productEntity, Integer id) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(()->new RuntimeException("Нет категории с этим id"));
         categoryEntity.addProduct(productEntity);
         productEntity.setCategoryEntity(categoryEntity);
         productRepository.save(productEntity);
@@ -43,7 +43,6 @@ public class ProductServiceImpl implements ProductService {
             if (productDTO.getProductName()!="") {productEntity.setProductName(productDTO.getProductName());}
             if (productDTO.getProductDescription()!="") {productEntity.setProductDescription(productDTO.getProductDescription());}
             if (productDTO.getProductPrice()>0) {productEntity.setProductPrice(productDTO.getProductPrice());}
-            if (productDTO.getProductStatus()!="") {productEntity.setProductStatus(productDTO.getProductStatus());}
             return productRepository.save(productEntity);
         } catch (Exception err){
             throw new Exception("Ошибка2");

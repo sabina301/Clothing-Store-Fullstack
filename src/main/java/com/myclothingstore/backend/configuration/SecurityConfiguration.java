@@ -71,7 +71,6 @@ public class SecurityConfiguration {
                     auth.requestMatchers("/order/admin/**").hasRole("ADMIN"); //сделано 16.11
 
                     //PRODUCT
-
                     auth.requestMatchers("/product/addincategory/**").hasRole("ADMIN"); //сделано 08.11
                     auth.requestMatchers("/product/{id}/change/**").hasRole("ADMIN"); //сделано 08.11
                     auth.requestMatchers("/product/{id}/delete/**").hasRole("ADMIN"); //сделано 08.11

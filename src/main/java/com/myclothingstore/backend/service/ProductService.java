@@ -7,7 +7,7 @@ import com.myclothingstore.backend.model.DTO.ChangeProductDTO;
 import java.util.Set;
 
 public interface ProductService {
-    void addProductInCategoryService(ProductEntity productEntity);
+    void addProductInCategoryService(ProductEntity productEntity, Integer id);
     ProductEntity changeProductService(Long id, ChangeProductDTO productDTO) throws Exception;
     void deleteProductService(Long id) throws Exception;
 

@@ -17,10 +17,10 @@ public class ProductController {
     private ProductServiceImpl productService;
 
 
-    @PostMapping("/addincategory")
-    public ResponseEntity addProductInCategoryController(@RequestBody ProductEntity productEntity){
+    @PostMapping("/addincategory/{id}")
+    public ResponseEntity addProductInCategoryController(@RequestBody ProductEntity productEntity, @PathVariable Integer id){
         try{
-            productService.addProductInCategoryService(productEntity);
+            productService.addProductInCategoryService(productEntity, id);
             return ResponseEntity.ok("Продукт добавлен");
         } catch (Exception err){
             return ResponseEntity.badRequest().body(err);

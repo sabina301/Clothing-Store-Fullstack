@@ -28,9 +28,6 @@ public class ProductEntity implements Serializable {
     private String productDescription;
     private String productIcon;
     private Integer productPrice;
-    private String productStatus;
-    private Integer categoryId;
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

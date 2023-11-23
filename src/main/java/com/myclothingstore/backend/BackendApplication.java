@@ -16,11 +16,9 @@ import java.util.Set;
 
 @SpringBootApplication
 public class BackendApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
 	}
-
 	@Bean
 	CommandLineRunner run(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder passwordEncode){
 		return args ->{
@@ -34,5 +32,4 @@ public class BackendApplication {
 			userRepository.save(admin);
 		};
 	}
-
 }
