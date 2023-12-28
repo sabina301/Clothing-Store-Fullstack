@@ -3,6 +3,7 @@ package com.myclothingstore.backend.service.impl;
 
 import com.myclothingstore.backend.entity.CategoryEntity;
 import com.myclothingstore.backend.entity.ProductEntity;
+import com.myclothingstore.backend.exception.CategoryNotFoundException;
 import com.myclothingstore.backend.repository.CategoryRepository;
 import com.myclothingstore.backend.repository.ProductRepository;
 import com.myclothingstore.backend.service.CategoryService;
@@ -19,23 +20,19 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     private ProductRepository productRepository;
 
-    public CategoryEntity addCategoryService(CategoryEntity categoryEntity) throws Exception{
+    public CategoryEntity addCategoryService(CategoryEntity categoryEntity){
         if (categoryRepository.findByName(categoryEntity.getName()).isEmpty()){
             return categoryRepository.save(categoryEntity);
         } else {
-            throw new Exception("Такое имя для категории уже существует");
+            throw new RuntimeException("Такое имя для категории уже существует");
         }
     }
 
-    public List<CategoryEntity> showAllCategoriesService() throws Exception{
-        try{
-            return categoryRepository.findAll();
-        } catch (Exception err){
-            throw new Exception("Ошибка");
-        }
+    public List<CategoryEntity> showAllCategoriesService(){
+        return categoryRepository.findAll();
     }
 
     public List<ProductEntity> showProductsInCategoryService(Integer categoryId){
-        return productRepository.findByCategoryEntity(categoryRepository.findById(categoryId).orElseThrow(()->new RuntimeException("Не существует категории в таким id")));
+        return productRepository.findByCategoryEntity(categoryRepository.findById(categoryId).orElseThrow(()->new CategoryNotFoundException("Не существует категории в таким id")));
     }
 }

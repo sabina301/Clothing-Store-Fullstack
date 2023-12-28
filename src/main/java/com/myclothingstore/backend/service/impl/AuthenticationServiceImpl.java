@@ -1,6 +1,7 @@
 package com.myclothingstore.backend.service.impl;
 
 import com.myclothingstore.backend.entity.CartEntity;
+import com.myclothingstore.backend.exception.RoleNotFoundException;
 import com.myclothingstore.backend.model.DTO.LoginResponseDTO;
 import com.myclothingstore.backend.entity.UserEntity;
 import com.myclothingstore.backend.model.Role;
@@ -40,11 +41,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Autowired
     private TokenServiceImpl tokenService;
-    public void registerUser(String username, String password) throws Exception{
+    public void registerUser(String username, String password){
         if (userRepository.findByUsername(username).isEmpty()){
             String encodedPassword = passwordEncoder.encode(password);
-            Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new Exception("Роль не найдена"));
-            Set<Role> authorities = new HashSet<Role>();
+            Role userRole = roleRepository.findByAuthority("USER").orElseThrow(() -> new RoleNotFoundException("Роль не найдена"));
+            Set<Role> authorities = new HashSet<>();
             authorities.add(userRole);
 
             CartEntity cartEntity = new CartEntity();
@@ -59,7 +60,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             userRepository.save(userEntity);
             cartRepository.save(cartEntity);
         } else {
-            throw new Exception("Такое имя уже существует");
+            throw new RuntimeException("Такое имя уже существует");
         }
     }
 
@@ -73,9 +74,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String token = tokenService.generateJwt(auth);
             return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
 
-        } catch(AuthenticationException e){
-            return new LoginResponseDTO(null, "");
-        } catch (Exception err){
+        } catch(Exception e){
             return new LoginResponseDTO(null, "");
         }
     }

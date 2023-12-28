@@ -15,7 +15,7 @@ public class AuthenticationController {
     private AuthenticationServiceImpl authenticationService;
 
     @PostMapping("/register")
-    private ResponseEntity userRegister(@RequestBody RegistrationDTO registrationDTO) throws Exception {
+    private ResponseEntity userRegister(@RequestBody RegistrationDTO registrationDTO) {
         authenticationService.registerUser(registrationDTO.getUsername(), registrationDTO.getPassword());
         return ResponseEntity.ok("Сохранен");
     }

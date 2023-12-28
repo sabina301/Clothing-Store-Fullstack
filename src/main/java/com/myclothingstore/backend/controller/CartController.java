@@ -29,8 +29,8 @@ public class CartController {
     public ResponseEntity showCartController(Principal principal){
         try{
             return ResponseEntity.ok(cartService.showCartService(principal));
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -39,8 +39,8 @@ public class CartController {
         try{
             cartService.deleteProductService(principal, id);
             return ResponseEntity.ok("Удалено");
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 

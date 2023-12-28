@@ -22,8 +22,8 @@ public class ProductController {
         try{
             productService.addProductInCategoryService(productEntity, id);
             return ResponseEntity.ok("Продукт добавлен");
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body(err);
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -31,8 +31,8 @@ public class ProductController {
     public ResponseEntity changeProductController(@PathVariable Long id, @RequestBody ChangeProductDTO productDTO){
         try {
             return ResponseEntity.ok(productService.changeProductService(id, productDTO));
-        } catch (Exception err) {
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -40,9 +40,9 @@ public class ProductController {
     public ResponseEntity deleteProductController(@PathVariable Long id) throws Exception{
         try{
             productService.deleteProductService(id);
-            return ResponseEntity.ok("Удалено");
-        } catch (Exception err) {
-            return ResponseEntity.badRequest().body("Ошибка");
+            return ResponseEntity.ok("Товар удален");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.myclothingstore.backend.service.impl;
 
 import com.myclothingstore.backend.entity.*;
+import com.myclothingstore.backend.exception.CartNotFoundException;
+import com.myclothingstore.backend.exception.UserNotFoundException;
 import com.myclothingstore.backend.model.DTO.OrderDTO;
 import com.myclothingstore.backend.repository.*;
 import com.myclothingstore.backend.service.OrderService;
@@ -25,8 +27,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     public String createOrderService(Principal principal, OrderDTO orderDTO){
-        UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Пользователь не найден"));
-        CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElseThrow(()->new RuntimeException("Корзина не найдена"));
+        UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new UserNotFoundException("Пользователь не найден"));
+        CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElseThrow(()->new CartNotFoundException("Корзина не найдена"));
         Set<ProductInOrderEntity> products = new HashSet<>(cartEntity.getProducts());
         for (ProductInOrderEntity productInOrder : products){
             ProductEntity product = productInOrder.getProductEntity();
@@ -35,7 +37,6 @@ public class OrderServiceImpl implements OrderService {
                 if (productSizeEntity.getSize() == productInOrder.getSize()){
                     if (productSizeEntity.getQuantity()>=productInOrder.getQuantity()){
                         productSizeEntity.setQuantity(productSizeEntity.getQuantity() - productInOrder.getQuantity());
-                        System.out.println("Товар есть на складе. Осталось: " + productSizeEntity.getQuantity());
                     }
                     else{
                         return "Товар " + productInOrder.getProductName() + " закончился на складе :(";
@@ -49,13 +50,13 @@ public class OrderServiceImpl implements OrderService {
     }
     @Transactional
     public Set<OrderEntity> showAllUserOrdersService(Principal principal){
-        UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("Пользователь не найден"));
+        UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new UserNotFoundException("Пользователь не найден"));
         return userEntity.getOrders();
     }
 
     @Transactional
     public Set<ProductInOrderEntity> showOneUserOrderService(Principal principal, Long id){
-        UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new RuntimeException("ПОльзователь не найден"));
+        UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new UserNotFoundException("Пользователь не найден"));
         Set<OrderEntity> orders = userEntity.getOrders();
         for (OrderEntity order: orders){
             if (order.getId() == id){
@@ -70,7 +71,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     public Set<ProductInOrderEntity> showOneOrderService(Long id){
-        OrderEntity orderEntity = orderRepository.findById(id).orElseThrow(()->new RuntimeException("Заказ не найден"));
+        OrderEntity orderEntity = orderRepository.findById(id).orElseThrow(()->new UserNotFoundException("Заказ не найден"));
         return orderEntity.getProducts();
     }
 

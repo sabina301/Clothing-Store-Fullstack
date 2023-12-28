@@ -2,6 +2,7 @@ package com.myclothingstore.backend.service.impl;
 
 
 import com.myclothingstore.backend.entity.UserEntity;
+import com.myclothingstore.backend.exception.UserNotFoundException;
 import com.myclothingstore.backend.model.Role;
 //import com.myclothingstore.backend.repository.CategoryRepository;
 import com.myclothingstore.backend.repository.CategoryRepository;
@@ -31,7 +32,7 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private ProductRepository productRepository;
 
-    public UserEntity changeUserRoleService(Long id) throws Exception{
+    public UserEntity changeUserRoleService(Long id){
         try {
             Optional<UserEntity> userEntityOptional = userRepository.findById(id);
             if (userEntityOptional.isPresent()){
@@ -41,14 +42,15 @@ public class RoleServiceImpl implements RoleService {
                 newRoles.add(role);
                 userEntity.setAuthorities(newRoles);
                 return userRepository.save(userEntity);
+            } else {
+                throw new UserNotFoundException("Пользователь с таким id не найден");
             }
-            return null;
-        } catch (Exception err){
-            throw new Exception("Ошибка смены роли");
+        } catch (RuntimeException e){
+            throw new RuntimeException("Ошибка смены роли");
         }
     }
 
-    public UserEntity changeAdminRoleService(Long id) throws Exception{
+    public UserEntity changeAdminRoleService(Long id){
         try {
             Optional<UserEntity> userEntityOptional = userRepository.findById(id);
             if (userEntityOptional.isPresent()){
@@ -58,10 +60,11 @@ public class RoleServiceImpl implements RoleService {
                 newRoles.add(role);
                 userEntity.setAuthorities(newRoles);
                 return userRepository.save(userEntity);
+            } else {
+                throw new UserNotFoundException("Пользователь с таким id не найден");
             }
-            return null;
         } catch (Exception err){
-            throw new Exception("Ошибка смены роли");
+            throw new RuntimeException("Ошибка смены роли");
         }
     }
 }

@@ -3,6 +3,7 @@ package com.myclothingstore.backend.service.impl;
 import com.myclothingstore.backend.entity.CategoryEntity;
 import com.myclothingstore.backend.entity.ProductEntity;
 import com.myclothingstore.backend.entity.ProductSizeEntity;
+import com.myclothingstore.backend.exception.ProductNotFoundException;
 import com.myclothingstore.backend.model.DTO.ChangeProductDTO;
 import com.myclothingstore.backend.repository.CategoryRepository;
 import com.myclothingstore.backend.repository.ProductRepository;
@@ -36,25 +37,28 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(productEntity);
     }
 
-    public ProductEntity changeProductService(Long id, ChangeProductDTO productDTO) throws Exception{
+    public ProductEntity changeProductService(Long id, ChangeProductDTO productDTO){
         try {
-            ProductEntity productEntity = productRepository.findById(id).get();
+            ProductEntity productEntity = productRepository.findById(id).orElseThrow(()->{
+                return new ProductNotFoundException("Товар не найден");
+            });
             if (productDTO.getProductIcon()!="") {productEntity.setProductIcon(productDTO.getProductIcon());}
             if (productDTO.getProductName()!="") {productEntity.setProductName(productDTO.getProductName());}
             if (productDTO.getProductDescription()!="") {productEntity.setProductDescription(productDTO.getProductDescription());}
             if (productDTO.getProductPrice()>0) {productEntity.setProductPrice(productDTO.getProductPrice());}
             return productRepository.save(productEntity);
-        } catch (Exception err){
-            throw new Exception("Ошибка2");
+        } catch (RuntimeException e){
+            throw new RuntimeException("Ошибка изменений данных о товаре");
         }
 
     }
 
-    public void deleteProductService(Long id) throws Exception{
+    public void deleteProductService(Long id){
         try {
 
-            ProductEntity productEntity = productRepository.findById(id).orElseThrow(() ->
-                    new Exception("Нет такого id"));
+            ProductEntity productEntity = productRepository.findById(id).orElseThrow(() ->{
+                return new ProductNotFoundException("Товар не найден");
+            });
 
             CategoryEntity category = productEntity.getCategoryEntity();
 
@@ -63,8 +67,8 @@ public class ProductServiceImpl implements ProductService {
 
             productRepository.save(productEntity);
 
-        } catch (Exception err) {
-            throw new Exception("Ошибка при удалении продукта");
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Ошибка при удалении товара");
         }
     }
 

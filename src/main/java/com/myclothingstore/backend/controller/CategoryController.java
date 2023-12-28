@@ -17,26 +17,22 @@ public class CategoryController {
     public ResponseEntity addCategoryController(@RequestBody CategoryEntity categoryEntity){
         try{
             return ResponseEntity.ok(categoryService.addCategoryService(categoryEntity));
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @GetMapping("/showall")
-    public ResponseEntity showAllCategoriesController() throws Exception{
-        try{
-            return ResponseEntity.ok(categoryService.showAllCategoriesService());
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
-        }
+    public ResponseEntity showAllCategoriesController(){
+        return ResponseEntity.ok(categoryService.showAllCategoriesService());
     }
 
     @GetMapping("/showproducts/{id}")
     public ResponseEntity showProductsInCategoryController(@PathVariable("id") Integer categoryId){
         try{
             return ResponseEntity.ok(categoryService.showProductsInCategoryService(categoryId));
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 }

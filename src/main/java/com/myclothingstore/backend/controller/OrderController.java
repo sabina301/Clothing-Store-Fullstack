@@ -17,15 +17,19 @@ public class OrderController {
 
     @PostMapping("/create")
     public ResponseEntity createOrderController(Principal principal, @RequestBody OrderDTO orderDTO){
-        return ResponseEntity.ok(orderService.createOrderService(principal, orderDTO));
+        try {
+            return ResponseEntity.ok(orderService.createOrderService(principal, orderDTO));
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/user/showall")
     public ResponseEntity showAllUserOrdersController(Principal principal){
         try{
             return ResponseEntity.ok(orderService.showAllUserOrdersService(principal));
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -33,8 +37,8 @@ public class OrderController {
     public ResponseEntity showOneUserOrderController(Principal principal, @PathVariable Long id){
         try{
             return ResponseEntity.ok(orderService.showOneUserOrderService(principal,id));
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -42,8 +46,8 @@ public class OrderController {
     public ResponseEntity showAllOrdersController(){
         try {
             return ResponseEntity.ok(orderService.showAllOrdersService());
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -51,8 +55,8 @@ public class OrderController {
     public ResponseEntity showOneOrderController(@PathVariable Long id){
         try{
             return ResponseEntity.ok(orderService.showOneOrderService(id));
-        } catch (Exception err){
-            return ResponseEntity.badRequest().body("Ошибка");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
