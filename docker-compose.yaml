@@ -1,0 +1,25 @@
+services:
+  app:
+    image: clothing-store
+    container_name: ps-app-clothing-store
+    depends_on:
+      - postgresql
+    networks:
+      - ps
+    ports:
+      - "8080:8080"
+  postgresql:
+    image: postgres:15-alpine
+    container_name: ps-psql-clothing-store
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=clothingstore
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Ertyu55555
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    networks:
+      - ps
+networks:
+  ps:
