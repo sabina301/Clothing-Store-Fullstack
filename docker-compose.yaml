@@ -4,10 +4,18 @@ services:
     container_name: ps-app-clothing-store
     depends_on:
       - postgresql
+      - front
     networks:
       - ps
     ports:
       - "8080:8080"
+  front:
+    image: prod-front
+    container_name: ps-front
+    networks:
+      - ps
+    ports:
+      - "80:80"
   postgresql:
     image: postgres:15-alpine
     container_name: ps-psql-clothing-store
