@@ -2,7 +2,6 @@ package com.myclothingstore.backend.service.impl;
 
 import com.myclothingstore.backend.entity.CategoryEntity;
 import com.myclothingstore.backend.entity.ProductEntity;
-import com.myclothingstore.backend.entity.ProductSizeEntity;
 import com.myclothingstore.backend.exception.ProductNotFoundException;
 import com.myclothingstore.backend.model.DTO.ChangeProductDTO;
 import com.myclothingstore.backend.repository.CategoryRepository;
@@ -12,8 +11,6 @@ import com.myclothingstore.backend.repository.UserRepository;
 import com.myclothingstore.backend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -29,6 +26,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+
+    public ProductEntity getProductService(Long id) throws Exception {
+        try {
+            ProductEntity productEntity = productRepository.findById(id).orElseThrow(()->{
+                return new ProductNotFoundException("Товар не найден");
+            });
+            return productEntity;
+        } catch (RuntimeException e){
+            throw new RuntimeException("Ошибка получения товара");
+        }
+    }
+
 
     public void addProductInCategoryService(ProductEntity productEntity, Integer id) {
         CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(()->new RuntimeException("Нет категории с этим id"));

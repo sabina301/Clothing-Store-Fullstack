@@ -16,7 +16,16 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
 
-
+    @GetMapping("/{id}/get")
+    public ResponseEntity getProductController(@PathVariable Long id){
+        try{
+            return ResponseEntity.ok(productService.getProductService(id));
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
     @PostMapping("/addincategory/{id}")
     public ResponseEntity addProductInCategoryController(@RequestBody ProductEntity productEntity, @PathVariable Integer id){
         try{

@@ -32,19 +32,19 @@ public class CartServiceImpl implements CartService {
 
 
     @Transactional
-    public void addProductInCartService(Long productId, Long size, Principal principal) {
+    public void addProductInCartService(Long productId, Principal principal) {
         String username = principal.getName();
         ProductEntity productEntity = productRepository.findById(productId).orElseThrow(() -> new ProductNotFoundException("Продукт не найден"));
 
         UserEntity userEntity = userRepository.findByUsername(username).orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
 
-        CartEntity cartEntity = cartRepository.findById(userEntity.getCartEntity().getId()).get();
+        CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElse(new CartEntity(userEntity));
 
         Set<ProductInOrderEntity> products = cartEntity.getProducts();
 
         if (products.size()!=0) {
             for (ProductInOrderEntity product : products) {
-                if (product.getProductEntity() == productEntity && size.equals(product.getSize())) {
+                if (product.getProductEntity() == productEntity) {
                     product.setQuantity(product.getQuantity() + 1);
                     cartRepository.save(cartEntity);
                     productRepository.save(productEntity);
@@ -58,7 +58,6 @@ public class CartServiceImpl implements CartService {
         productInOrderEntity.setProductIcon(productEntity.getProductIcon());
         productInOrderEntity.setProductPrice(productEntity.getProductPrice());
         productInOrderEntity.setProductEntity(productEntity);
-        productInOrderEntity.setSize(size);
         productInOrderRepository.save(productInOrderEntity);
 
         cartEntity.addProduct(productInOrderEntity);
