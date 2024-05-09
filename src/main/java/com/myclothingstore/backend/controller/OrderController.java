@@ -16,9 +16,9 @@ public class OrderController {
     private OrderServiceImpl orderService;
 
     @PostMapping("/create")
-    public ResponseEntity createOrderController(Principal principal, @RequestBody OrderDTO orderDTO){
+    public ResponseEntity createOrderController(Principal principal){
         try {
-            return ResponseEntity.ok(orderService.createOrderService(principal, orderDTO));
+            return ResponseEntity.ok(orderService.createOrderService(principal));
         } catch (RuntimeException e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface OrderService {
-    String createOrderService(Principal principal, OrderDTO orderDTO);
+    String createOrderService(Principal principal);
     Set<OrderEntity> showAllUserOrdersService(Principal principal);
     Set<ProductInOrderEntity> showOneUserOrderService(Principal principal, Long id);
     List<OrderEntity> showAllOrdersService();

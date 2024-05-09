@@ -155,3 +155,26 @@ function displayCartItems(cartItem) {
     summa.textContent = "Итоговая сумма: " + totalSumm + "р";
     cartContainer.appendChild(summa);
 }
+
+
+
+document.getElementById('do-order').addEventListener('click', function() {
+    const url = `/order/create`;
+    const jwt = getCookie('jwt');
+    fetch(url, {
+        method: "POST",
+        headers: {
+            Authorization: "Bearer " + jwt,
+            Cookie: document.cookie,
+        },
+    })
+        .then((response) => {
+            if (response.status === 200) {
+                console.log("OK")
+            } else {
+                console.error("Error", response.status);
+            }
+        })
+        .catch((error) => console.error("Error", error));
+});
+

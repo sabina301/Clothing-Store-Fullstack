@@ -26,7 +26,7 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Transactional
-    public String createOrderService(Principal principal, OrderDTO orderDTO){
+    public String createOrderService(Principal principal){
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new UserNotFoundException("Пользователь не найден"));
         CartEntity cartEntity = cartRepository.findByUserEntity(userEntity).orElseThrow(()->new CartNotFoundException("Корзина не найдена"));
         Set<ProductInOrderEntity> products = new HashSet<>(cartEntity.getProducts());
@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
         }
-        OrderEntity orderEntity = orderRepository.save(new OrderEntity((short) (100 + Math.random()*1000), orderDTO.getAddress(), "Заказ принят", userEntity, products));
+        OrderEntity orderEntity = orderRepository.save(new OrderEntity((short) (100 + Math.random()*1000), "address", "Заказ принят", userEntity, products));
         return "Заказ создан";
     }
     @Transactional

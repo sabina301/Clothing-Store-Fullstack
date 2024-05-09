@@ -1,10 +1,4 @@
-let product = {
-    name: "Свитшот",
-    sale: "799 руб.",
-    full: "999 руб.",
-    img: "img/cl1.jpg",
-    description: "Здесь будет описание товара",
-};
+
 const currentUrl = window.location.href;
 url = currentUrl+"/get"
 

@@ -1,23 +1,22 @@
 let orderItems = [
-    { image: "img/cl1.jpg", name: "Куртка", price: 5100 },
-    { image: "img/cl2.jpg", name: "Кофта", price: 2000 },
-    { image: "img/cl3.jpg", name: "Футболка", price: 900 },
-    { image: "img/cl4.jpg", name: "Свитшот", price: 1100 },
-    { image: "img/cl5.jpg", name: "Куртка", price: 2000 },
+    { image: "/img/cl.jpg", name: "Куртка", price: 5100 },
+    { image: "/img/cl.jpg", name: "Кофта", price: 2000 },
+    { image: "/img/cl.jpg", name: "Футболка", price: 900 },
+    { image: "/img/cl.jpg", name: "Свитшот", price: 1100 },
+    { image: "/img/cl.jpg", name: "Куртка", price: 2000 },
 ];
 
 let buyItems = [
-    { image: "img/cl1.jpg", name: "Куртка", price: 5100 },
-    { image: "img/cl2.jpg", name: "Кофта", price: 2000 },
-    { image: "img/cl3.jpg", name: "Футболка", price: 900 },
-    { image: "img/cl4.jpg", name: "Свитшот", price: 1100 },
-    { image: "img/cl5.jpg", name: "Куртка", price: 2000 },
+    { image: "/img/cl.jpg", name: "Куртка", price: 5100 },
+    { image: "/img/cl.jpg", name: "Кофта", price: 2000 },
+    { image: "/img/cl.jpg", name: "Футболка", price: 900 },
+    { image: "/img/cl.jpg", name: "Свитшот", price: 1100 },
+    { image: "/img/cl.jpg", name: "Куртка", price: 2000 },
 ];
 
 let user = {
-    username: "Сабина",
-    email: "szholobovaaa@gmail.com",
-    avatar: "img/avatar.jfif",
+    username: "user1",
+    avatar: "/img/avatar.png",
 };
 
 function displayUser(userInfo) {
@@ -27,12 +26,7 @@ function displayUser(userInfo) {
     name.textContent = userInfo.username;
     name.id = "name";
 
-    let email = document.createElement("p");
-    email.textContent = userInfo.email;
-    email.id = "email";
-
     nameContainer.appendChild(name);
-    nameContainer.appendChild(email);
 
     let avatarContainer = document.getElementById("avatar-container");
 
@@ -53,7 +47,7 @@ function displayOrderItem(orderItems) {
         imgOrderCont.classList.add("img-order-cont");
 
         let img = document.createElement("img");
-        img.src = item.image;
+        img.src = "/img/cl.jpg";
 
         imgOrderCont.appendChild(img);
         imgOrder.appendChild(imgOrderCont);
@@ -71,7 +65,7 @@ function displayBuyItem(buyItems) {
         imgBuyCont.classList.add("img-buy-cont");
 
         let img = document.createElement("img");
-        img.src = item.image;
+        img.src = "/img/cl.jpg";
 
         imgBuyCont.appendChild(img);
         imgBuy.appendChild(imgBuyCont);
