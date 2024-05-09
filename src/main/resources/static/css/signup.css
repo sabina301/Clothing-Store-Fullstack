@@ -1,0 +1,96 @@
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #000000;
+    background: url("../img/background-login.png") no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.form-control {
+    width: 100%;
+    min-height: 38px;
+    font-size: 15px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+input {
+    border-radius: 10px;
+    padding-left: 10px;
+    background-color: #8f76ff17;
+    margin-bottom: 10px;
+    border: none;
+    outline: none;
+}
+
+a {
+    margin: 20px;
+    color: #000000;
+}
+
+button {
+    height: 40px;
+    width: 150px;
+    left: 50%;
+    border-radius: 10px;
+    margin: 20px;
+    border: none;
+    background: linear-gradient(to right, #bb00ff, rgb(255, 114, 163));
+    transition: background 0.8s ease; /* изменяем на background-image */
+}
+
+button:hover {
+    background: linear-gradient(to right, #a935df, rgb(92, 100, 190));
+    cursor: pointer;
+}
+
+#username-page {
+    text-align: center;
+    height: 100%;
+}
+
+.username-page-container {
+    width: 500px;
+    height: max-content;
+    background-color: rgba(255, 255, 255, 0.859);
+
+    margin: auto;
+    margin-top: 10%;
+    padding: 50px;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 20px rgb(114, 156, 255);
+}
+
+.username-page-container .username-submit {
+    margin-top: 10px;
+}
+
+#enter-question {
+    text-align: center;
+    text-decoration: none;
+}
+
+#enter-question:hover {
+    color: #5437d2;
+    cursor: pointer;
+}
+
+#error {
+    color: rgb(0, 0, 0);
+}

@@ -1,0 +1,271 @@
+body {
+    background-color: #000000;
+}
+
+h1 {
+    font-family: "Oi", cursive;
+    font-weight: 10;
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    text-align: center;
+    margin-top: 100px;
+}
+
+#cloth {
+    font-family: "Oi", cursive;
+    font-weight: 10;
+    color: rgb(211, 81, 101);
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: -60px;
+}
+
+#main-content {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-rows: 60px 1fr;
+    gap: 20px;
+    grid-row-gap: 5px;
+}
+
+#way {
+    position: relative;
+    background-color: rgb(128, 139, 150);
+    margin: 0;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    padding-left: 20px;
+}
+
+#back {
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    filter: invert(1);
+}
+
+#back-back {
+    display: flex;
+
+    background-color: rgb(128, 139, 150);
+    border-radius: 10px 10px 0 0;
+}
+
+#back-back {
+    position: relative;
+    align-items: center;
+    text-decoration: none;
+}
+
+#back-back p {
+    position: absolute;
+    left: 25%;
+}
+
+.text-way {
+    font-family: "Vollkorn SC", sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: white;
+    margin: 15px;
+}
+
+#way a:nth-child(2) {
+    margin-left: 50%;
+}
+
+#sort {
+    padding-top: 50px;
+    text-align: center;
+    background-image: linear-gradient(
+            to bottom,
+            rgb(128, 139, 150),
+            rgba(128, 139, 150, 0.114)
+    );
+    height: min-content;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-image: linear-gradient(
+            to bottom,
+            rgb(128, 139, 150),
+            rgba(128, 139, 150, 0.114)
+    );
+    width: auto;
+    position: relative;
+    padding: 50px;
+}
+
+.product-container {
+    position: relative;
+    width: 280px;
+    height: auto;
+    padding-bottom: 10px;
+    background-image: linear-gradient(
+            to bottom,
+            rgba(128, 139, 150, 0.678),
+            rgba(191, 197, 204, 0.903)
+    );
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.product-img {
+    overflow: hidden;
+    width: 280px;
+    height: 380px;
+    border-radius: 10px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.caption {
+    font-family: "Vollkorn SC", sans-serif;
+    font-size: 20px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.caption-price {
+    font-family: "Vollkorn SC", sans-serif;
+    font-size: 18px;
+    text-align: center;
+}
+
+p {
+    color: white;
+}
+
+#content {
+    padding: 20px;
+}
+
+.dynamic-content {
+    transform: translateY(20px);
+    transition: opacity 0.5s, transform 0.5s;
+    color: white;
+    margin: 10px;
+}
+
+input {
+    font-family: "Vollkorn SC", sans-serif;
+    font-size: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    background-color: rgba(171, 180, 189, 0.678);
+
+    margin-top: 5px;
+    margin-bottom: 20px;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+input:focus {
+    border-color: rgb(0, 0, 0);
+    box-shadow: 0 0 5px rgb(0, 0, 0);
+}
+p {
+    font-family: "Vollkorn SC", sans-serif;
+    font-size: 18px;
+    margin: 0;
+}
+
+button {
+    background-color: rgb(211, 81, 101);
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+    min-width: 140px;
+    margin-top: 10px;
+    margin-bottom: 60px;
+    font-family: "Vollkorn SC", sans-serif;
+    font-size: 14px;
+    color: white;
+}
+
+button:hover {
+    background-color: rgba(211, 81, 100, 0.7);
+}
+
+.product-container:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(255, 0, 0, 0), rgba(255, 0, 13, 0.2));
+    border-radius: 10px;
+    z-index: 1;
+}
+
+@media (max-width: 1000px) {
+    #main-content {
+        grid-template-columns: 1fr;
+    }
+
+    #sort {
+        background-color: rgba(128, 139, 150, 0.482);
+    }
+
+    .container {
+        background-image: linear-gradient(
+                to bottom,
+                rgba(128, 139, 150, 0.482),
+                rgba(128, 139, 150, 0.114)
+        );
+    }
+    #ok {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 1000px) {
+    #main-content {
+        grid-template-columns: 1fr;
+    }
+
+    #sort {
+        background-color: rgba(128, 139, 150, 0.482);
+    }
+
+    .container {
+        background-image: linear-gradient(
+                to bottom,
+                rgba(128, 139, 150, 0.482),
+                rgba(128, 139, 150, 0.114)
+        );
+    }
+    #ok {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+}
+@media (max-width: 420px) {
+    #main-content {
+        margin: 4%;
+        grid-template-columns: 350px;
+    }
+}
+
+@media (max-width: 350px) {
+    #main-content {
+        margin: 4%;
+        grid-template-columns: 300px;
+    }
+    input {
+        width: 200px;
+    }
+}

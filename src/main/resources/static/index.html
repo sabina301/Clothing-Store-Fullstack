@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="img/icon.png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Магазин одежды</title>
+    <link rel="stylesheet" href="css/index.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Oi&family=Orbitron:wght@800&family=Raleway:ital,wght@0,200;1,200;1,500;1,900&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Philosopher&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Vollkorn+SC:wght@400;600;700;900&display=swap"
+            rel="stylesheet"
+    />
+</head>
+<body>
+<header>
+    <div class="menu-toggle">
+        <div class="line line-1"></div>
+        <div class="line line-2"></div>
+        <div class="line line-3"></div>
+    </div>
+    <nav class="menu">
+        <ul>
+            <li id="m-woman">Женщинам</li>
+            <li id="m-man">Мужчинам</li>
+            <li id="m-profile">Профиль</li>
+            <li id="m-cart">Корзина</li>
+        </ul>
+    </nav>
+
+    <div class="shop-head">
+        <h1 class="shop-name">everyday lifestyle</h1>
+        <div class="login-block">
+            <a class="login" href="login.html">Войти</a>
+        </div>
+    </div>
+
+    <!--NAVBAR-->
+    <nav id="navbar">
+        <ul class="ul-navbar">
+            <li class="li-navbar">
+                <div id="woman" class="navbar-link">Женщинам</div>
+            </li>
+            <li class="li-navbar">
+                <div id="man" class="navbar-link">Мужчинам</div>
+            </li>
+            <li></li>
+            <li></li>
+            <li class="li-navbar">
+                <div id="profile" class="navbar-link">Профиль</div>
+            </li>
+
+            <li class="li-navbar">
+                <div id="cart" class="navbar-link">Корзина</div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-photo-container">
+        <img class="main-photo" src="img/main-photo.png" alt="main-photo" />
+        <h1 class="main-photo-text">
+            НОВЫЕ<br />
+            КОЛЛЕКЦИИ
+        </h1>
+        <h1 class="main-photo-years">23-24</h1>
+        <img class="gradient-black" src="img/gradient-black.png" alt="" />
+    </div>
+</header>
+
+<main>
+    <section class="main-section">
+        <div class="text">Новинки</div>
+        <div id="new-container"></div>
+    </section>
+
+    <section class="main-section2">
+        <div class="text">Хиты</div>
+        <div id="hit-container"></div>
+    </section>
+</main>
+</body>
+
+<footer>
+    <div id="help">
+        <div class="block-help1">
+            <p>Для покупателя</p>
+        </div>
+        <div class="block-help2">
+            <a href="#"> Акции</a>
+        </div>
+        <div class="block-help3">
+            <a href="#">Доставка</a>
+        </div>
+        <div class="block-help4">
+            <a href="#"> Оплата</a>
+        </div>
+        <div class="block-help5">
+            <a href="#">Обмен и возврат</a>
+        </div>
+
+        <div class="block-help6">
+            <p>О компании</p>
+        </div>
+        <div class="block-help7">
+            <a href="#">Новости</a>
+        </div>
+
+        <div class="block-help8">
+            <a href="#"
+            >Пользовательское <br />
+                соглашение</a
+            >
+        </div>
+        <div class="block-help9">
+            <a href="#"
+            >Политика <br />
+                конфиденциальности</a
+            >
+        </div>
+
+        <div class="block-help10">
+            <p>Наши контакты</p>
+        </div>
+        <div class="block-help11">
+            <p>г. Москва Мичуринский проспект 12к2</p>
+        </div>
+        <div class="block-help12">
+            <p>+7 953 691 81 17</p>
+        </div>
+        <div class="block-help13">
+            <p>everydaylifestyle@gmail.com</p>
+        </div>
+    </div>
+</footer>
+<script src="js/newCatalog.js"></script>
+<script src="js/hitCatalog.js"></script>
+<script src="js/burger.js"></script>
+<script src="js/index.js"></script>
+</html>
