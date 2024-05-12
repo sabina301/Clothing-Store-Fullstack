@@ -21,6 +21,7 @@ public class CartEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity userEntity;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "cartEntity", cascade = {CascadeType.REFRESH, CascadeType.MERGE, CascadeType.PERSIST})
     private Set<ProductInOrderEntity> products = new HashSet<>();
     public CartEntity(UserEntity user) {

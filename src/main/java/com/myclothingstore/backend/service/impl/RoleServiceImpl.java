@@ -19,19 +19,14 @@ import java.util.Set;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
     public UserEntity changeUserRoleService(Long id){
         try {
             Optional<UserEntity> userEntityOptional = userRepository.findById(id);
@@ -49,7 +44,6 @@ public class RoleServiceImpl implements RoleService {
             throw new RuntimeException("Ошибка смены роли");
         }
     }
-
     public UserEntity changeAdminRoleService(Long id){
         try {
             Optional<UserEntity> userEntityOptional = userRepository.findById(id);

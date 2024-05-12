@@ -1,5 +1,5 @@
 package com.myclothingstore.backend.configuration;
-import com.myclothingstore.backend.service.UserDetailService;
+import com.myclothingstore.backend.service.impl.UserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,14 +21,10 @@ import java.io.IOException;
 public class JwtTokenFilter extends OncePerRequestFilter {
     @Autowired
     public UserDetailService userService;
-
     private final JwtDecoder jwtDecoder;
-
     public JwtTokenFilter(JwtDecoder jwtDecoder) {
         this.jwtDecoder = jwtDecoder;
     }
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         String token = extractTokenFromCookie(request);
@@ -45,8 +41,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
-
-
     private String extractTokenFromCookie(HttpServletRequest request) {
         if (WebUtils.getCookie(request, "jwt") !=null){
             return WebUtils.getCookie(request, "jwt").getValue();
@@ -54,5 +48,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             return "none";
         }
     }
-
 }
+
+

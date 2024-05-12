@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 @RestController
 public class PageController {
-
     @GetMapping("/auth/login")
     public ResponseEntity<byte[]> getLoginPage() throws IOException {
         Resource resource = new ClassPathResource("static/login.html");
@@ -20,7 +19,6 @@ public class PageController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(bytes);
     }
-
     @GetMapping("/auth/signup")
     public ResponseEntity<byte[]> getSignupPage() throws IOException {
         Resource resource = new ClassPathResource("static/signup.html");
@@ -29,7 +27,6 @@ public class PageController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(bytes);
     }
-
     @GetMapping("/main")
     public ResponseEntity<byte[]> getMainPage() throws IOException {
         Resource resource = new ClassPathResource("static/index.html");
@@ -38,7 +35,6 @@ public class PageController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(bytes);
     }
-
     @GetMapping("/catalog/woman")
     public ResponseEntity<byte[]> getCatalogWomanPage() throws IOException {
         Resource resource = new ClassPathResource("static/catalog.html");
@@ -47,7 +43,6 @@ public class PageController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(bytes);
     }
-
     @GetMapping("/catalog/man")
     public ResponseEntity<byte[]> getCatalogManPage() throws IOException {
         Resource resource = new ClassPathResource("static/catalog.html");
@@ -56,7 +51,6 @@ public class PageController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(bytes);
     }
-
     @GetMapping("/profile")
     public ResponseEntity<byte[]> getProfilePage() throws IOException {
         Resource resource = new ClassPathResource("static/profile.html");
@@ -65,7 +59,6 @@ public class PageController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(bytes);
     }
-
     @GetMapping("/cart")
     public ResponseEntity<byte[]> getCartPage() throws IOException {
         Resource resource = new ClassPathResource("static/cart.html");
@@ -74,7 +67,6 @@ public class PageController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(bytes);
     }
-
     @GetMapping("/product/{id}")
     public ResponseEntity<byte[]> getProductPage() throws IOException {
         Resource resource = new ClassPathResource("static/product.html");
@@ -83,8 +75,4 @@ public class PageController {
                 .contentType(MediaType.TEXT_HTML)
                 .body(bytes);
     }
-
-
-
-
 }

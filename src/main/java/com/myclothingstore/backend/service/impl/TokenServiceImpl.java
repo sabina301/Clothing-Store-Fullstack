@@ -14,17 +14,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class TokenServiceImpl implements TokenService {
-
     @Autowired
     private JwtEncoder jwtEncoder;
-
     @Autowired
     private JwtDecoder jwtDecoder;
-
     public String generateJwt(Authentication auth){
-
         Instant now = Instant.now();
-
         String scope = auth.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(" "));
@@ -35,8 +30,12 @@ public class TokenServiceImpl implements TokenService {
                 .subject(auth.getName())
                 .claim("roles", scope)
                 .build();
-
         return jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
-
 }
+
+
+
+
+
+

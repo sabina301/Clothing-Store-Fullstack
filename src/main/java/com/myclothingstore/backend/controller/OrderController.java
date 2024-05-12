@@ -11,10 +11,8 @@ import java.security.Principal;
 @RequestMapping("/order")
 @RestController
 public class OrderController {
-
     @Autowired
     private OrderServiceImpl orderService;
-
     @PostMapping("/create")
     public ResponseEntity createOrderController(Principal principal){
         try {
@@ -23,7 +21,6 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     @GetMapping("/user/showall")
     public ResponseEntity showAllUserOrdersController(Principal principal){
         try{
@@ -32,7 +29,6 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     @GetMapping("/user/showone/{id}")
     public ResponseEntity showOneUserOrderController(Principal principal, @PathVariable Long id){
         try{
@@ -41,7 +37,6 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     @GetMapping("/admin/showall")
     public ResponseEntity showAllOrdersController(){
         try {
@@ -50,7 +45,6 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     @GetMapping("/admin/showone/{id}")
     public ResponseEntity showOneOrderController(@PathVariable Long id){
         try{
@@ -59,5 +53,9 @@ public class OrderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }
+
+
+
+
+

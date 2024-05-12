@@ -6,6 +6,7 @@ import com.myclothingstore.backend.exception.UserNotFoundException;
 import com.myclothingstore.backend.model.DTO.LoginResponseDTO;
 import com.myclothingstore.backend.entity.UserEntity;
 import com.myclothingstore.backend.model.DTO.RegisterResponseDTO;
+import com.myclothingstore.backend.model.DTO.UserProfileDTO;
 import com.myclothingstore.backend.model.Role;
 import com.myclothingstore.backend.repository.CartRepository;
 import com.myclothingstore.backend.repository.RoleRepository;
@@ -21,6 +22,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,16 +44,12 @@ import java.util.Set;
 public class AuthenticationServiceImpl {
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private TokenService tokenService;
     public RegisterResponseDTO registerUser(String username, String password){
@@ -68,19 +66,22 @@ public class AuthenticationServiceImpl {
             return new RegisterResponseDTO(null);
         }
     }
-
-
     public LoginResponseDTO loginUser(String username, String password){
-
         try{
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
             String token = tokenService.generateJwt(auth);
             return new LoginResponseDTO(userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User is not found")), token);
-
         } catch(Exception e){
             return new LoginResponseDTO(null, "");
         }
     }
+
+    public UserProfileDTO getUser(Principal principal) {
+        return new UserProfileDTO(principal.getName());
+    }
 }
+
+
+

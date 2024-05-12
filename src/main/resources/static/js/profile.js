@@ -1,23 +1,50 @@
-let orderItems = [
-    { image: "/img/cl.jpg", name: "Куртка", price: 5100 },
-    { image: "/img/cl.jpg", name: "Кофта", price: 2000 },
-    { image: "/img/cl.jpg", name: "Футболка", price: 900 },
-    { image: "/img/cl.jpg", name: "Свитшот", price: 1100 },
-    { image: "/img/cl.jpg", name: "Куртка", price: 2000 },
-];
 
-let buyItems = [
-    { image: "/img/cl.jpg", name: "Куртка", price: 5100 },
-    { image: "/img/cl.jpg", name: "Кофта", price: 2000 },
-    { image: "/img/cl.jpg", name: "Футболка", price: 900 },
-    { image: "/img/cl.jpg", name: "Свитшот", price: 1100 },
-    { image: "/img/cl.jpg", name: "Куртка", price: 2000 },
-];
+const jwt = getCookie('jwt'); // Замените на имя вашей куки с JWT токеном
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+fetch("/auth/get/user", {
+    method: 'GET',
 
-let user = {
-    username: "user1",
-    avatar: "/img/avatar.png",
-};
+})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        displayUser(data);
+    })
+    .catch(error => {
+        console.error('Ошибка при выполнении запроса:', error);
+    });
+
+
+fetch("/order/user/showall", {
+    method: 'GET',
+    headers: {
+        Authorization: "Bearer " + jwt,
+        Cookie: document.cookie,
+    },
+})
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        displayOrderItem(data);
+    })
+    .catch(error => {
+        console.error('Ошибка при выполнении запроса:', error);
+    });
+
 
 function displayUser(userInfo) {
     let nameContainer = document.getElementById("name-container");
@@ -27,14 +54,9 @@ function displayUser(userInfo) {
     name.id = "name";
 
     nameContainer.appendChild(name);
-
-    let avatarContainer = document.getElementById("avatar-container");
-
-    let avatar = document.createElement("img");
-    avatar.src = userInfo.avatar;
-
-    avatarContainer.appendChild(avatar);
 }
+
+
 
 function displayOrderItem(orderItems) {
     let orderContainer = document.getElementById("order");
@@ -49,29 +71,14 @@ function displayOrderItem(orderItems) {
         let img = document.createElement("img");
         img.src = "/img/cl.jpg";
 
-        imgOrderCont.appendChild(img);
+        let text = document.createElement("p");
+        text.textContent = "id: "+item.id
+
+        let code = document.createElement("p");
+        code.textContent = "Код: "+item.code
+
+        imgOrderCont.appendChild(text);
+        imgOrderCont.appendChild(code);
         imgOrder.appendChild(imgOrderCont);
     });
 }
-
-function displayBuyItem(buyItems) {
-    let buyContainer = document.getElementById("buy");
-    buyContainer.id = "buy";
-    let imgBuy = document.createElement("img-buy");
-    imgBuy.id = "img-buy";
-    buyContainer.appendChild(imgBuy);
-    buyItems.forEach((item) => {
-        let imgBuyCont = document.createElement("div");
-        imgBuyCont.classList.add("img-buy-cont");
-
-        let img = document.createElement("img");
-        img.src = "/img/cl.jpg";
-
-        imgBuyCont.appendChild(img);
-        imgBuy.appendChild(imgBuyCont);
-    });
-}
-
-displayOrderItem(orderItems);
-displayBuyItem(buyItems);
-displayUser(user);

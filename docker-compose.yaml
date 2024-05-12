@@ -1,10 +1,17 @@
 services:
   app:
     image: clothing-store
+    build:
+      context: .
     container_name: ps-app-clothing-store
     depends_on:
-      - postgresql
+      - db
       - front
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/clothingstore
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=Ertyu55555
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - ps
     ports:
@@ -16,9 +23,9 @@ services:
       - ps
     ports:
       - "80:80"
-  postgresql:
+  db:
     image: postgres:15-alpine
-    container_name: ps-psql-clothing-store
+    container_name: db
     ports:
       - "5432:5432"
     environment:

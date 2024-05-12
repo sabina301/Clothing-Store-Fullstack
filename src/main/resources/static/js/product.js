@@ -1,5 +1,12 @@
 
 const currentUrl = window.location.href;
+const back = document.getElementById("back-back")
+
+back.addEventListener("click", function (){
+    window.location.href = "/catalog/woman"
+})
+
+
 url = currentUrl+"/get"
 
 fetch(url, {

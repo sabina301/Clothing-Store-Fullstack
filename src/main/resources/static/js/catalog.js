@@ -47,6 +47,7 @@ document.querySelectorAll("button")[2].addEventListener("click", function () {
 });
 
 function displayCatalogItems(items) {
+
     let catalogContainer = document.querySelector(".container");
     catalogContainer.innerHTML = "";
     items.forEach((item) => {

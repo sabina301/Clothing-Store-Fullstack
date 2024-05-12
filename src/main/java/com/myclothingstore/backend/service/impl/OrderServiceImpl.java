@@ -23,8 +23,6 @@ public class OrderServiceImpl implements OrderService {
     private UserRepository userRepository;
     @Autowired
     private CartRepository cartRepository;
-
-
     @Transactional
     public String createOrderService(Principal principal){
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new UserNotFoundException("Пользователь не найден"));
@@ -53,7 +51,6 @@ public class OrderServiceImpl implements OrderService {
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new UserNotFoundException("Пользователь не найден"));
         return userEntity.getOrders();
     }
-
     @Transactional
     public Set<ProductInOrderEntity> showOneUserOrderService(Principal principal, Long id){
         UserEntity userEntity = userRepository.findByUsername(principal.getName()).orElseThrow(()->new UserNotFoundException("Пользователь не найден"));
@@ -65,14 +62,16 @@ public class OrderServiceImpl implements OrderService {
         }
         return null;
     }
-
     public List<OrderEntity> showAllOrdersService(){
         return orderRepository.findAll();
     }
-
     public Set<ProductInOrderEntity> showOneOrderService(Long id){
         OrderEntity orderEntity = orderRepository.findById(id).orElseThrow(()->new UserNotFoundException("Заказ не найден"));
         return orderEntity.getProducts();
     }
 
 }
+
+
+
+

@@ -130,8 +130,8 @@ p {
 }
 
 #order p {
-    font-size: 30px;
-    margin-top: 50px;
+    font-size: 20px;
+    margin:10px;
 }
 
 #img-order {

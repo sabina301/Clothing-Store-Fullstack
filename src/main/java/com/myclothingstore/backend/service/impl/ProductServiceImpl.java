@@ -14,20 +14,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private ProductRepository productRepository;
-
-
     public ProductEntity getProductService(Long id) throws Exception {
         try {
             ProductEntity productEntity = productRepository.findById(id).orElseThrow(()->{
@@ -38,15 +32,12 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Ошибка получения товара");
         }
     }
-
-
     public void addProductInCategoryService(ProductEntity productEntity, Integer id) {
         CategoryEntity categoryEntity = categoryRepository.findById(id).orElseThrow(()->new RuntimeException("Нет категории с этим id"));
         categoryEntity.addProduct(productEntity);
         productEntity.setCategoryEntity(categoryEntity);
         productRepository.save(productEntity);
     }
-
     public ProductEntity changeProductService(Long id, ChangeProductDTO productDTO){
         try {
             ProductEntity productEntity = productRepository.findById(id).orElseThrow(()->{
@@ -60,27 +51,18 @@ public class ProductServiceImpl implements ProductService {
         } catch (RuntimeException e){
             throw new RuntimeException("Ошибка изменений данных о товаре");
         }
-
     }
-
     public void deleteProductService(Long id){
         try {
-
             ProductEntity productEntity = productRepository.findById(id).orElseThrow(() ->{
                 return new ProductNotFoundException("Товар не найден");
             });
-
             CategoryEntity category = productEntity.getCategoryEntity();
-
             category.removeProduct(productEntity);
             productEntity.setCategoryEntity(null);
-
             productRepository.save(productEntity);
-
         } catch (RuntimeException e) {
             throw new RuntimeException("Ошибка при удалении товара");
         }
     }
-
-
 }

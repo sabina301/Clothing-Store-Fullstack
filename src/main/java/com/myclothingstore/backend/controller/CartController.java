@@ -11,10 +11,8 @@ import java.security.Principal;
 @CrossOrigin("*")
 @RequestMapping("/cart")
 public class CartController {
-
     @Autowired
     private CartServiceImpl cartService;
-
     @PostMapping("/addproduct/{id}")
     public ResponseEntity addProductInCartController(@PathVariable("id") Long id,Principal principal){
         try {
@@ -24,7 +22,6 @@ public class CartController {
             return ResponseEntity.badRequest().body(err.getMessage());
         }
     }
-
     @GetMapping("/show")
     public ResponseEntity showCartController(Principal principal){
         try{
@@ -33,7 +30,6 @@ public class CartController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
     @DeleteMapping("/deleteproduct/{id}")
     public ResponseEntity deleteProductController(Principal principal, @PathVariable Long id){
         try{
@@ -43,5 +39,6 @@ public class CartController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }
+
+

@@ -1,6 +1,7 @@
 package com.myclothingstore.backend.configuration;
 
-import com.myclothingstore.backend.service.UserDetailService;
+
+import com.myclothingstore.backend.service.impl.UserDetailService;
 import com.myclothingstore.backend.utilit.RSAKeyProperties;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
@@ -36,11 +37,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfiguration {
     private final RSAKeyProperties keys;
-
     public SecurityConfiguration(RSAKeyProperties keys){
         this.keys = keys;
     }
-
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -53,7 +52,6 @@ public class SecurityConfiguration {
     public JwtTokenFilter jwtTokenFilter(JwtDecoder jwtDecoder) {
         return new JwtTokenFilter(jwtDecoder);
     }
-
     @Bean
     public AuthenticationManager authManager(UserDetailsService detailsService){
         DaoAuthenticationProvider daoProvider = new DaoAuthenticationProvider();
@@ -61,87 +59,40 @@ public class SecurityConfiguration {
         daoProvider.setPasswordEncoder(passwordEncoder());
         return new ProviderManager(daoProvider);
     }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtTokenFilter jwtTokenFilter) throws Exception{
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> {
-
-                    //AUTH
-                    auth.requestMatchers("/auth/**").permitAll(); //сделано
-
-                    //PROFILE
+        http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests(auth -> {
+                    auth.requestMatchers("/auth/**").permitAll();
                     auth.requestMatchers("/profile").authenticated();
-
-                    //STATIC
-                    auth.requestMatchers("/js/**").permitAll(); //сделано
-                    auth.requestMatchers("/css/**").permitAll(); //сделано
-                    auth.requestMatchers("/img/**").permitAll(); //сделано
-
-                    //MAIN
+                    auth.requestMatchers("/js/**", "/css/**", "/img/**").permitAll();
                     auth.requestMatchers("/main/**").permitAll();
-
-                    //CART
-                    auth.requestMatchers("/cart").authenticated();
-                    auth.requestMatchers("/cart/addproduct/**").hasRole("USER"); //сделано 14.11
-                    auth.requestMatchers("/cart/show/**").hasRole("USER"); //сделано 14.11
-                    auth.requestMatchers("/cart/deleteproduct/**").hasRole("USER"); // сделано 15.11
-
-                    //CATALOG
-                    auth.requestMatchers("/catalog/**").permitAll();
-
-                    //CATEGORY
-                    auth.requestMatchers("/category").permitAll();
-                    auth.requestMatchers("/category/add/**").hasRole("ADMIN"); //сделано 08.11
-                    auth.requestMatchers("/category/showall/**").permitAll(); //сделано 08.11
-                    auth.requestMatchers("/category/showproducts/**").permitAll(); //сделано 08.11
-
-                    //ORDER
-                    auth.requestMatchers("/order/user/**").hasRole("USER"); //сделано 16.11
-                    auth.requestMatchers("/order/admin/**").hasRole("ADMIN"); //сделано 16.11
-
-                    //PRODUCT
-                    auth.requestMatchers("/product/**").permitAll();
-                    auth.requestMatchers("/product/addincategory/**").hasRole("ADMIN"); //сделано 08.11
-                    auth.requestMatchers("/product/{id}/change/**").hasRole("ADMIN"); //сделано 08.11
-                    auth.requestMatchers("/product/{id}/delete/**").hasRole("ADMIN"); //сделано 08.11
-
-                    //PRODUCT_SIZE
-                    auth.requestMatchers("/productsize/add/**").hasRole("ADMIN"); //сделано 20.11
-                    auth.requestMatchers("/productsize/{id}/show/**").permitAll(); //
-
-                    //ROLE
-                    auth.requestMatchers("/role/**").permitAll(); //сделано
-
+                    auth.requestMatchers("/cart", "/cart/addproduct/**", "/cart/show/**", "/cart/deleteproduct/**").authenticated();
+                    auth.requestMatchers("/catalog/**", "/category", "/category/showall/**", "/category/showproducts/**").permitAll();
+                    auth.requestMatchers("/category/add/**", "/order/admin/**", "/product/addincategory/**", "/product/{id}/change/**",
+                            "/product/{id}/delete/**", "/productsize/add/**").hasRole("ADMIN");
+                    auth.requestMatchers("/order/user/**").hasRole("USER");
+                    auth.requestMatchers("/product/**", "/productsize/{id}/show/**", "/role/**").permitAll();
                     auth.anyRequest().authenticated();
                 });
-
-
         http.oauth2ResourceServer()
                 .jwt()
                 .jwtAuthenticationConverter(jwtAuthenticationConverter());
         http.sessionManagement(
                 session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         );
-        http
-                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
-
+        http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
     @Bean
     public JwtDecoder jwtDecoder(){
         return NimbusJwtDecoder.withPublicKey(keys.getPublicKey()).build();
     }
-
     @Bean
     public JwtEncoder jwtEncoder(){
         JWK jwk = new RSAKey.Builder(keys.getPublicKey()).privateKey(keys.getPrivateKey()).build();
         JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
         return new NimbusJwtEncoder(jwks);
     }
-
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter(){
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();
