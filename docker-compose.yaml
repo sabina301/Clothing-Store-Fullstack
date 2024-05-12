@@ -7,11 +7,6 @@ services:
     depends_on:
       - db
       - front
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/clothingstore
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=Ertyu55555
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - ps
     ports:
@@ -29,9 +24,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=clothingstore
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Ertyu55555
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
     volumes:
       - ./data:/var/lib/postgresql/data
     networks:
