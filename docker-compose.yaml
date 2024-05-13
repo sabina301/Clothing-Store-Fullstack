@@ -1,37 +1,10 @@
+version: "3.8"
+
 services:
-  app:
-    image: clothing-store
-    build:
-      context: .
-    container_name: ps-app-clothing-store
-    depends_on:
-      - db
-      - front
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-cp0kimi1hbls73ec9sk0-a:5432/db_9rki
-      - SPRING_DATASOURCE_USERNAME=postgress
-      - SPRING_DATASOURCE_PASSWORD=biPmSeCIO9gG4nqD3prLRc54V0enR6Bp
-    networks:
-      - ps
-    ports:
-      - "8080:8080"
-  front:
-    image: prod-front
-    container_name: ps-front
-    networks:
-      - ps
-    ports:
-      - "80:80"
-  db:
+  database:
     image: postgres:15-alpine
-    container_name: db
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=db_9rki
-      - POSTGRES_USER=postgress
-      - POSTGRES_PASSWORD=biPmSeCIO9gG4nqD3prLRc54V0enR6Bp
-    networks:
-      - ps
-networks:
-  ps:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
