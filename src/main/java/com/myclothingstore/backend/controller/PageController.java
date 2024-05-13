@@ -1,5 +1,6 @@
 package com.myclothingstore.backend.controller;
 
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.core.io.ClassPathResource;
@@ -11,68 +12,42 @@ import java.io.IOException;
 import java.nio.file.Files;
 @RestController
 public class PageController {
+
+    private final ResourceLoader resourceLoader;
+
+    public PageController(ResourceLoader resourceLoader) {
+        this.resourceLoader = resourceLoader;
+    }
     @GetMapping("/auth/login")
-    public ResponseEntity<byte[]> getLoginPage() throws IOException {
-        Resource resource = new ClassPathResource("static/login.html");
-        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(bytes);
+    public Resource getLoginPage() {
+        return resourceLoader.getResource("classpath:/static/login.html");
     }
     @GetMapping("/auth/signup")
-    public ResponseEntity<byte[]> getSignupPage() throws IOException {
-        Resource resource = new ClassPathResource("static/signup.html");
-        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(bytes);
+    public Resource getSignupPage() {
+        return resourceLoader.getResource("classpath:/static/signup.html");
     }
     @GetMapping("/main")
-    public ResponseEntity<byte[]> getMainPage() throws IOException {
-        Resource resource = new ClassPathResource("static/index.html");
-        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(bytes);
+    public Resource getMainPage() {
+        return resourceLoader.getResource("classpath:/static/index.html");
     }
     @GetMapping("/catalog/woman")
-    public ResponseEntity<byte[]> getCatalogWomanPage() throws IOException {
-        Resource resource = new ClassPathResource("static/catalog.html");
-        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(bytes);
+    public Resource getCatalogWomanPage() {
+        return resourceLoader.getResource("classpath:/static/catalog.html");
     }
     @GetMapping("/catalog/man")
-    public ResponseEntity<byte[]> getCatalogManPage() throws IOException {
-        Resource resource = new ClassPathResource("static/catalog.html");
-        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(bytes);
+    public Resource getCatalogManPage(){
+        return resourceLoader.getResource("classpath:/static/catalog.html");
     }
     @GetMapping("/profile")
-    public ResponseEntity<byte[]> getProfilePage() throws IOException {
-        Resource resource = new ClassPathResource("static/profile.html");
-        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(bytes);
+    public Resource getProfilePage(){
+        return resourceLoader.getResource("classpath:/static/profile.html");
     }
     @GetMapping("/cart")
-    public ResponseEntity<byte[]> getCartPage() throws IOException {
-        Resource resource = new ClassPathResource("static/cart.html");
-        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(bytes);
+    public Resource getCartPage(){
+        return resourceLoader.getResource("classpath:/static/cart.html");
     }
     @GetMapping("/product/{id}")
-    public ResponseEntity<byte[]> getProductPage() throws IOException {
-        Resource resource = new ClassPathResource("static/product.html");
-        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
-        return ResponseEntity.ok()
-                .contentType(MediaType.TEXT_HTML)
-                .body(bytes);
+    public Resource getProductPage(){
+        return resourceLoader.getResource("classpath:/static/product.html");
     }
 }
