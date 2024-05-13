@@ -8,10 +8,9 @@ services:
       - db
       - front
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/clothingstore
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=Ertyu55555
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://dpg-cp0kimi1hbls73ec9sk0-a:5432/db_9rki
+      - SPRING_DATASOURCE_USERNAME=postgress
+      - SPRING_DATASOURCE_PASSWORD=biPmSeCIO9gG4nqD3prLRc54V0enR6Bp
     networks:
       - ps
     ports:
@@ -29,11 +28,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_DB=clothingstore
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Ertyu55555
-    volumes:
-      - ./data:/var/lib/postgresql/data
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
     networks:
       - ps
 networks:
