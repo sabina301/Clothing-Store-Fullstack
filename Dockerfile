@@ -1,16 +1,10 @@
 
-
 FROM openjdk:17-jdk-alpine
 
-ARG JAR_FILE=target/*.jar
+WORKDIR /app
 
-COPY ${JAR_FILE} app.jar
+COPY . /app
 
-ENTRYPOINT ["java", "-jar", "/app.jar"]
+EXPOSE 8081
 
-
-
-
-
-
-
+ENTRYPOINT ["java", "-jar", "/app/build/backend-0.0.1-SNAPSHOT.jar"]
