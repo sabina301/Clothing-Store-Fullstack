@@ -28,8 +28,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=root
-      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=db_9rki
+      - POSTGRES_USER=postgress
+      - POSTGRES_PASSWORD=biPmSeCIO9gG4nqD3prLRc54V0enR6Bp
     networks:
       - ps
 networks:
